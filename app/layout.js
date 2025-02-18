@@ -53,10 +53,6 @@ export const metadata = {
   alternates: {
     canonical: 'https://apetforman.vercel.app',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-  },
   icons: {
     icon: '/favicon.ico',
   },
@@ -66,6 +62,11 @@ export const metadata = {
   category: 'art & tattoo',
   language: 'cs'
 }
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export default function RootLayout({ children }) {
   return (
