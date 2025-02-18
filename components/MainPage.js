@@ -114,7 +114,7 @@ export default function Page() {
   };
 
   return (
-    <div className="bodyContainer">
+    <div className="{`${reenieBeanie.className} bodyContainer`}">
       
       {/* Jamie in the corner */}
       <div className="jamieCorner">
@@ -151,7 +151,7 @@ export default function Page() {
             <div className="heart-bottom">
               <img src="/images/heart.png" alt="" />
             </div>
-          <div className="backgroundText">
+          <div className="{`${ibmPlexSerif.className} backgroundText`}">
             Říkají mi, že jsem pomalá. A je to pravda. Na jeden návrh potřebuju víc času než ostatní. Na jedno tetování taky. <br />
             Vlastně i čaj si zalévám pomaleji.<br />
 
