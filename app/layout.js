@@ -23,8 +23,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={reenieBeanie.className}>
-      <body className="bodyContainer">
+    <html lang="cs" className={reenieBeanie.className}>
+      <body>
         {children}
       </body>
     </html>
