@@ -41,6 +41,8 @@
   text-decoration: none;
   color: #16161D;
   z-index: 50;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 /* Left column - Contact section */
@@ -50,6 +52,8 @@
   gap: 1rem;
   align-items: flex-end;
   align-self: center;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .mainTitle {
@@ -58,6 +62,8 @@
   font-weight: normal;
   text-align: right;
   color: #16161D;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .contactLink {
@@ -65,6 +71,8 @@
   padding: 0.5rem 1rem;
   background: url("/images/torn-paper.png") center/cover no-repeat;
   color: #16161D;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 /* Center column - Image section */
@@ -173,6 +181,8 @@
   gap: 1rem;
   align-items: flex-start;
   align-self: center;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .navLinkWrapper {
@@ -188,6 +198,8 @@
   font-size: 2rem;
   z-index: 0;
   color: #16161D;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .scribbleOverlay {
@@ -223,6 +235,8 @@
   overflow: hidden;
   white-space: nowrap;
   background: #f9ece5;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .scrollingContent {
@@ -286,6 +300,8 @@
   text-align: right;
   line-height: 60%;
   transform: rotateZ(32deg);
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .jamieCorner:hover .jamieHover {
@@ -326,6 +342,8 @@
   left: 1rem;
   z-index: 50;
   text-decoration: none;
+  font-family: 'Reenie Beanie', cursive;
+
 }
 
 .contactFormWrapper {
@@ -422,4 +440,30 @@
   height: auto;
   z-index: 1;
   pointer-events: none;
+}
+
+.heart-top {
+  position: absolute;
+  top: -1px;
+  left: 14px;
+  z-index: 40;
+}
+
+.heart-top img {
+  width: 100px;
+  height: auto;
+  transform: rotate(-15deg);
+}
+
+.heart-bottom {
+  position: absolute;
+  bottom: 20px;
+  right: 50px;
+  z-index: 40;
+}
+
+.heart-bottom img {
+  width: 100px;
+  height: auto;
+  transform: rotate(15deg);
 }

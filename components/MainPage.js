@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -127,6 +125,7 @@ export default function Page() {
           
         </div>
       </div>
+      
       <div className="pageContainer">
         {/* Instagram handle */}
         <div className='grid-c-1'>
@@ -146,6 +145,12 @@ export default function Page() {
 
         {/* Center column - Image */}
         <div className="imageWrapper grid-c-3">
+          <div className="heart-top">
+              <img src="/images/heart.png" alt="" />
+            </div>
+            <div className="heart-bottom">
+              <img src="/images/heart.png" alt="" />
+            </div>
           <div className="backgroundText">
             Říkají mi, že jsem pomalá. A je to pravda. Na jeden návrh potřebuju víc času než ostatní. Na jedno tetování taky. <br />
             Vlastně i čaj si zalévám pomaleji.<br />
