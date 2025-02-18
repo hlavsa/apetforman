@@ -1,5 +1,27 @@
 /* global.css */
 
+/* Replace all instances of 'Reenie Beanie' with the variable */
+.instagramHandle,
+.contactSection,
+.mainTitle,
+.contactLink,
+.navLinks,
+.tornNavLink,
+.bottomBanner,
+.jamieText,
+.formTitle,
+.typeButton,
+.submitButton,
+.homeLink {
+  font-family: var(--reenie-beanie), cursive;
+}
+
+/* Replace IBM Plex Serif with the variable */
+.backgroundText,
+.formInput {
+  font-family: var(--ibm-plex), serif;
+}
+
 .bodyContainer {
   min-height: 100vh;
   margin: 0;
@@ -41,7 +63,6 @@
   text-decoration: none;
   color: #16161D;
   z-index: 50;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -52,7 +73,6 @@
   gap: 1rem;
   align-items: flex-end;
   align-self: center;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -62,7 +82,6 @@
   font-weight: normal;
   text-align: right;
   color: #16161D;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -71,7 +90,6 @@
   padding: 0.5rem 1rem;
   background: url("/images/torn-paper.png") center/cover no-repeat;
   color: #16161D;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -98,7 +116,6 @@
   line-height: 1.6;
   white-space: pre-wrap;
   color: #16161D;
-  font-family: 'IBM Plex Serif', serif;
   z-index: 1;
 }
 
@@ -181,7 +198,6 @@
   gap: 1rem;
   align-items: flex-start;
   align-self: center;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -198,7 +214,6 @@
   font-size: 2rem;
   z-index: 0;
   color: #16161D;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -235,7 +250,6 @@
   overflow: hidden;
   white-space: nowrap;
   background: #f9ece5;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -300,7 +314,6 @@
   text-align: right;
   line-height: 60%;
   transform: rotateZ(32deg);
-  font-family: 'Reenie Beanie', cursive;
 
 }
 
@@ -333,7 +346,6 @@
   font-family: 'Reenie Beanie', serif;
 }
 .formInput {
-  font-family: 'IBM Plex Serif', serif;
 }
 
 .homeLink {
@@ -342,7 +354,6 @@
   left: 1rem;
   z-index: 50;
   text-decoration: none;
-  font-family: 'Reenie Beanie', cursive;
 
 }
 

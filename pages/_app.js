@@ -1,30 +1,32 @@
 import "../styles/globals.css";
 import React from "react";
-import Script from 'next/script';
-
-import { Reenie_Beanie } from "next/font/google";
-
-import { IBM_Plex_Serif } from 'next/font/google';
+import { Reenie_Beanie, IBM_Plex_Serif } from "next/font/google";
 
 const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ['latin', 'latin-ext'],
-  weight: ['500']
+  weight: ['500'],
+  variable: '--font-ibm-plex',
+  display: 'swap',
 });
 
 const reenieBeanie = Reenie_Beanie({
   weight: "400",
   subsets: ["latin"],
+  variable: '--font-reenie',
   display: "swap",
 });
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
-
-      <div>
-        <Component {...pageProps} />
-      </div>
-    </>
+    <div className={`${reenieBeanie.variable} ${ibmPlexSerif.variable}`}>
+      <style jsx global>{`
+        :root {
+          --reenie-beanie: ${reenieBeanie.style.fontFamily};
+          --ibm-plex: ${ibmPlexSerif.style.fontFamily};
+        }
+      `}</style>
+      <Component {...pageProps} />
+    </div>
   );
 }
 
