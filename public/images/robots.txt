@@ -1,0 +1,15 @@
+# **** PRODUCTION robots.txt ****
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap
+Sitemap: 
+
+# Crawl delays
+Crawl-delay: 10
+
+# Additional rules
+Disallow: /_next/static/
+Disallow: /static/
+Disallow: /*.json$

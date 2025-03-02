@@ -42,17 +42,21 @@ export default function Page() {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     
+    // Calculate scaling factors between canvas internal size and displayed size
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
     if (evt.type.includes('mouse')) {
       return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top,
+        x: (evt.clientX - rect.left) * scaleX,
+        y: (evt.clientY - rect.top) * scaleY,
       };
     }
     
     if (evt.type.includes('touch') && evt.touches.length > 0) {
       return {
-        x: evt.touches[0].clientX - rect.left,
-        y: evt.touches[0].clientY - rect.top,
+        x: (evt.touches[0].clientX - rect.left) * scaleX,
+        y: (evt.touches[0].clientY - rect.top) * scaleY,
       };
     }
     
@@ -125,27 +129,16 @@ export default function Page() {
           
         </div>
       </div>
-      
-      <div className="pageContainer">
-        {/* Instagram handle */}
-        <div className='grid-c-1'>
-          <a href="https://instagram.com/art.petforman" className="instagramHandle" target="_blank" rel="noopener noreferrer">
-            @art.petforman
-          </a>
-        </div>
-        {/* Left column - Contact */}
-        <div className="contactSection grid-c-2">
-          <h1 className="mainTitle">
-            petra<br />formánková.
-          </h1>
-          <Link href="/kontakt" className="navLinkWrapper">
-            <span className="tornNavLink">kontakt.</span>
-          </Link>
-        </div>
 
-        {/* Center column - Image */}
-        <div className="imageWrapper grid-c-3">
-          <div className="heart-top">
+
+      
+      <div class="parent">
+          <div class="div1">
+            <a href="https://instagram.com/art.petforman" className="instagramHandle" target="_blank" rel="noopener noreferrer">
+              @art.petforman
+            </a>
+          </div>
+          <div class="div2 imageWrapper"><div className="heart-top">
               <img src="/images/heart.png" alt="" />
             </div>
             <div className="heart-bottom">
@@ -199,49 +192,100 @@ export default function Page() {
               onTouchEnd={stopDrawing}
             />
             <div className="paperOverlay" />
+          </div></div>
+          <div className="div3 bottomBanner">
+            <div className="scrollingContent">
+              {/* First set of scrolling items */}
+              {[...Array(12)].map((_, index) => (
+                <div key={`first-${index}`} className="scrollItem">
+                  <img src="/images/go.png" alt="" className="goIcon" /> 
+                  mám volné termíny.
+                </div>
+              ))}
+              {/* Duplicate set of scrolling items to ensure seamless looping */}
+              {[...Array(12)].map((_, index) => (
+                <div key={`second-${index}`} className="scrollItem">
+                  <img src="/images/go.png" alt="" className="goIcon" /> 
+                  mám volné termíny.
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-
-        {/* Right column - Navigation */}
-        <nav className="navLinks grid-c-4">
-          {Object.entries(videos).map(([key, value]) => (
+          <div class="div4"></div>
+          <div class="div5"></div>
+          <div class="div6">
+          <h1 className="mainTitle">
+              petra<br />formánková.
+            </h1>
+            
+          </div>
+          <div class="div7"><Link href="/kontakt" className="navLinkWrapper">
+            <span className="tornNavLink">kontakt.</span>
+          </Link></div>
+          <div class="div8"></div>
             <div 
-              key={key}
-              className="navLinkWrapper"
-              onMouseEnter={() => handleMouseEnter(key)}
+              className="navLinkWrapper div9"
+              onMouseEnter={() => handleMouseEnter('tetování')}
               onMouseLeave={handleMouseLeave}
             >
               <span className="tornNavLink">
-                {key}.
+                tetování.
               </span>
               <img 
-                src={scribbles[key]}
+                src={scribbles['tetování']}
                 alt=""
-                className={`scribbleOverlay ${activeVideo === value ? 'visible' : ''}`}
+                className={`scribbleOverlay ${activeVideo === videos['tetování'] ? 'visible' : ''}`}
               />
             </div>
-          ))}
-        </nav>
-        {/* Bottom banner */}
-        <div className="bottomBanner grid-c-5">
-          <div className="scrollingContent">
-            {[...Array(12)].map((_, index) => (
-              <div key={index} className="scrollItem">
-                <img src="/images/go.png" alt="" className="goIcon" /> 
-                mám volné termíny.
-              </div>
-            ))}
-          </div>
-          <div className="scrollingContent" aria-hidden="true">
-            {[...Array(12)].map((_, index) => (
-              <div key={`duplicate-${index}`} className="scrollItem">
-                <img src="/images/go.png" alt="" className="goIcon" /> 
-                mám volné termíny.
-              </div>
-            ))}
-          </div>
-        </div>
+
+            <div 
+              className="navLinkWrapper div10"
+              onMouseEnter={() => handleMouseEnter('malba')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <span className="tornNavLink">
+                malba.
+              </span>
+              <img 
+                src={scribbles['malba']}
+                alt=""
+                className={`scribbleOverlay ${activeVideo === videos['malba'] ? 'visible' : ''}`}
+              />
+            </div>
+
+            <div 
+              className="navLinkWrapper div11"
+              onMouseEnter={() => handleMouseEnter('ilustrace')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <span className="tornNavLink">
+                ilustrace.
+              </span>
+              <img 
+                src={scribbles['ilustrace']}
+                alt=""
+                className={`scribbleOverlay ${activeVideo === videos['ilustrace'] ? 'visible' : ''}`}
+              />
+            </div>
+
+            <div 
+              className="navLinkWrapper div12"
+              onMouseEnter={() => handleMouseEnter('parte')}
+              onMouseLeave={handleMouseLeave}
+            >
+              <span className="tornNavLink">
+                parte.
+              </span>
+              <img 
+                src={scribbles['parte']}
+                alt=""
+                className={`scribbleOverlay ${activeVideo === videos['parte'] ? 'visible' : ''}`}
+              />
+            </div>
       </div>
+          
+          
+      
       
       
     </div>
