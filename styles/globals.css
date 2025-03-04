@@ -10,6 +10,7 @@
 .bottomBanner,
 .jamieText,
 .formTitle,
+.formInput,
 .typeButton,
 .submitButton,
 .homeLink {
@@ -17,8 +18,7 @@
 }
 
 /* Replace IBM Plex Serif with the variable */
-.backgroundText,
-.formInput {
+.backgroundText {
   font-family: var(--ibm-plex), serif;
 }
 
@@ -88,7 +88,7 @@
   font-weight: 500;
   line-height: 1.6;
   white-space: pre-wrap;
-  color: #16161D;
+  color: #16161d38;
   z-index: 1;
 }
 
@@ -117,7 +117,7 @@
   top: 50%;
   left: 50%;
   width: 70%;
-  height: 70%;
+  height: 80%;
   transform: translate(-50%, -50%);
   z-index: 4;
   border-radius: 50%;
@@ -182,18 +182,18 @@
 .tornNavLink {
   position: relative;
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
   background: url("/images/torn-paper.png") center/cover no-repeat;
   font-size: 2rem;
   z-index: 0;
   color: #16161D;
-
+  cursor: pointer;
 }
 
 .scribbleOverlay {
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 40%;
   transform: translate(-50%, -50%);
   width: 58%;
   height: 70%;
@@ -205,6 +205,18 @@
 
 .scribbleOverlay.visible {
   opacity: 1;
+}
+
+.div1.navLinkWrapper .scribbleOverlay {
+  width: 58%; /* Match the existing scribble overlays */
+  height: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.div1 a.tornNavLink {
+  padding: 1.5rem 1rem;
 }
 
 /* Bottom banner */
@@ -318,17 +330,6 @@
 .formTitle, .typeButton, .submitButton {
   font-family: 'Reenie Beanie', serif;
 }
-.formInput {
-}
-
-.homeLink {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 50;
-  text-decoration: none;
-
-}
 
 .contactFormWrapper {
   position: relative;
@@ -341,16 +342,16 @@
 }
 
 .contactForm {
-  position: relative;
+  position: absolute;
   padding: 2rem;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  align-items: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 250px;
   z-index: 2;
+  top: -240px;
 }
 
 .formTitle {
@@ -365,6 +366,8 @@
   gap: 0.5rem;
   width: 100%;
   align-items: center;
+  position: relative;
+  width: 100%;
 }
 
 .typeButton {
@@ -377,6 +380,13 @@
   transition: all 0.3s ease;
   color: #16161D;
   opacity: 0.6;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.75rem;
+  font-family: var(--reenie-beanie), cursive;
+  border: none;
+  cursor: pointer;
 }
 
 .typeButton.selected {
@@ -388,15 +398,56 @@
   opacity: 0.8;
 }
 
+.formTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.formTitle {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.dropdownOptions {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  z-index: 50;
+  background: url("/images/torn-paper.png");
+  background-repeat: round;
+  padding: 4rem 0.5rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropdownOptions .typeButton {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  font-family: var(--reenie-beanie), cursive;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #16161D;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
 .formInput {
   width: 100%;
   padding: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   border: none;
   background: transparent;
   border-bottom: 2px solid #16161D;
   outline: none;
-  text-align: center;
+  text-align: left;
   color: #16161D;
   margin-top: 1rem;
 }
@@ -454,7 +505,7 @@
 
 .parent {
   display: grid;
-  grid-template-columns: min-content .75fr min-content;
+  grid-template-columns: minmax(150px, min-content) minmax(300px, .75fr) minmax(150px, min-content);
   grid-template-rows: repeat(7, 1fr);
   column-gap: 16px;
   justify-content: center;
@@ -464,7 +515,7 @@
 .div1 {
   grid-column: span 3 / span 3;
   justify-self: center;
-  align-self: center;
+  align-self: flex-start;
 }
 
 .div2 {
@@ -538,3 +589,360 @@
   align-self: flex-end;
 
 }
+
+.parentkontakt {
+  display: grid;
+  grid-template-columns: minmax(150px, min-content) minmax(300px, .75fr) minmax(150px, min-content);
+  grid-template-rows: repeat(7, 1fr);
+  column-gap: 16px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.kontakt1 {
+  grid-column: span 3 / span 3;
+  justify-self: flex-start;
+}
+
+.kontakt2 {
+  grid-column-start: 1;
+  grid-row-start: 6;
+}
+
+.kontakt3 {
+  grid-column-start: 1;
+  grid-row-start: 4; /* Match home page row start */
+  justify-self: flex-end; /* Match home page justify-self */
+  align-self: flex-end; /* Match home page align-self */
+}
+
+.kontakt4 {
+  grid-column-start: 1;
+  grid-row-start: 4;
+}
+
+.kontakt5 {
+  grid-row: span 2 / span 2;
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+.kontakt3 {
+  grid-column: 1;
+  grid-row: 4;
+  justify-self: flex-start;
+  align-self: flex-end;
+}
+
+/* Kontakt odkaz na obou stránkách */
+.kontakt8 {
+  grid-column: 1;
+  grid-row: 6;
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+
+.kontakt8 {
+  grid-column-start: 1;
+  grid-row-start: 6; /* Match home page row start */
+  align-self: flex-end; /* Match home page align-self */
+  justify-self: flex-start;
+}
+
+.kontakt9 {
+  grid-column: 2 / span 2;
+  grid-row: 2 / span 5;
+  position: relative;
+  overflow: visible;
+}
+
+.kontakt9 img {
+  position: absolute;
+  top: -420px;
+  left: 0;
+  width: 110%; /* Přesahuje hranice gridu */
+  height: auto;
+  object-fit: contain;
+  z-index: 0;
+}
+
+.kontaktWave {
+  width: 220px;
+  height: auto;
+  position: absolute;
+  right: -165px;
+  top: 30%;
+  transform: rotateX(180deg) rotateZ(-24deg);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Make sure the parent has position relative */
+.kontakt8 {
+  position: relative;
+}
+
+
+
+/* Base grid structure for all pages */
+.page-grid {
+  display: grid;
+  grid-template-columns: minmax(150px, min-content) minmax(300px, .75fr) minmax(150px, min-content);
+  grid-template-rows: repeat(7, 1fr);
+  column-gap: 16px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #f9ece5;
+}
+
+/* Fixed position elements that appear on all pages */
+/* Instagram/Home link - top center */
+.top-link {
+  grid-column: span 3 / span 3;
+  grid-row-start: 1;
+  justify-self: center;
+  align-self: flex-start;
+  position: relative;
+}
+
+/* Jamie dog corner - always in same position on all pages */
+.jamie-corner {
+  position: fixed;
+  top: -8px;
+  right: -8px;
+  z-index: 50;
+}
+
+/* Main title - left side, consistently positioned on all pages */
+.main-title-area {
+  grid-column: 1;
+  grid-row: 4;
+  justify-self: flex-end;
+  align-self: flex-end;
+  position: relative;
+}
+
+/* Contact link - consistently positioned across pages */
+.contact-link-area {
+  grid-column: 1;
+  grid-row: 6;
+  justify-self: flex-end;
+  align-self: flex-end;
+  position: relative;
+}
+
+/* Main content area - spans most of the center */
+.main-content-area {
+  grid-column: 2;
+  grid-row: 2 / span 5;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Navigation links - consistently positioned on right side */
+.nav-links-area {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav-tetovani {
+  grid-column: 3;
+  grid-row: 3;
+  align-self: flex-end;
+}
+
+.nav-malba {
+  grid-column: 3;
+  grid-row: 4;
+  align-self: flex-end;
+}
+
+.nav-ilustrace {
+  grid-column: 3;
+  grid-row: 5;
+  align-self: flex-end;
+}
+
+.nav-parte {
+  grid-column: 3;
+  grid-row: 6;
+  align-self: flex-end;
+}
+
+/* Bottom banner - consistently positioned at bottom */
+.bottom-banner-area {
+  grid-column: span 3 / span 3;
+  grid-row: 7;
+  align-self: flex-end;
+  justify-self: center;
+  width: 100%;
+}
+
+/* Styles for art category pages */
+.art-page-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.art-item {
+  background-color: #180000;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.art-item.large {
+  grid-column: span 2;
+}
+
+.art-item.tall {
+  grid-row: span 2;
+}
+
+/* Contact page specific styles */
+.contact-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-hand {
+  position: absolute;
+  width: 110%;
+  height: auto;
+  object-fit: contain;
+  z-index: 0;
+  top: -420px;
+  left: 0;
+}
+
+.contact-form-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+/* Homepage specific styles */
+.homepage-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.circle-overlay {
+  position: absolute;
+  top: 66%;
+  left: 34%;
+  width: 70%;
+  height: 70%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.background-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+  padding: 2rem 4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: #16161d38;
+  z-index: 1;
+  font-family: var(--ibm-plex), serif;
+}
+
+/* Common element styles */
+.torn-nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 1rem 1rem;
+  background: url("/images/torn-paper.png") center/cover no-repeat;
+  font-size: 2rem;
+  z-index: 0;
+  color: #16161D;
+  cursor: pointer;
+  font-family: var(--reenie-beanie), cursive;
+}
+
+.main-title {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: normal;
+  color: #16161D;
+  font-family: var(--reenie-beanie), cursive;
+}
+
+.scribble-overlay {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  width: 58%;
+  height: 70%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.scribble-overlay.visible {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .nav-links-area {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    grid-column: span 3;
+    grid-row: auto;
+  }
+  
+  .main-content-area {
+    grid-column: 1;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .main-title-area,
+  .contact-link-area {
+    grid-column: 1;
+    justify-self: center;
+  }
+}
+
+

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
+import Layout from './Layout';
 
-export default function Page() {
+export default function MainPage() {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -16,20 +16,13 @@ export default function Page() {
     parte: '/videos/parte.mp4'
   };
 
-  const scribbles = {
-    tetování: '/images/scribble.png',
-    malba: '/images/scribble.png',
-    ilustrace: '/images/scribble.png',
-    parte: '/images/scribble.png'
-  };
-
   useEffect(() => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
-      ctx.strokeStyle = '#000';
+      ctx.strokeStyle = '#16161D';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, 0, Math.PI * 2);
@@ -91,6 +84,7 @@ export default function Page() {
 
   const handleMouseEnter = async (videoKey) => {
     setActiveVideo(videos[videoKey]);
+    
     if (videoRef.current) {
       try {
         if (playPromiseRef.current) {
@@ -103,8 +97,8 @@ export default function Page() {
     }
   };
   
-  const handleMouseLeave = async () => {
-    if (playPromiseRef.current) {
+  const handleMouseLeave = async (videoKey) => {
+    if (playPromiseRef.current && videos[videoKey]) {
       try {
         await playPromiseRef.current;
         if (videoRef.current) {
@@ -114,180 +108,78 @@ export default function Page() {
         console.log('Video pause interrupted');
       }
     }
-    setActiveVideo(null);
+    
+    if (videoKey && videos[videoKey]) {
+      setActiveVideo(null);
+    }
   };
 
-  return (
-    <div className="bodyContainer">
-      
-      {/* Jamie in the corner */}
-      <div className="jamieCorner">
-        <img src="/images/jamie.png" alt="Jamie the dog" className="jamieImage" />
-        <div className="jamieHover">
-          <span className="jamieText">eurasier<br />jamie.</span>
-          <img src="/images/wave-scribble.png" alt="" className="waveScribble" />
-          
+  // Main content for the homepage
+  const homePageContent = (
+    <div className="homepage-image">
+      <div className="heart-top">
+        <img src="/images/heart.png" alt="" />
+      </div>
+      <div className="heart-bottom">
+        <img src="/images/heart.png" alt="" />
+      </div>
+      <div className="backgroundText">
+        <p>
+          Říkají mi, že jsem pomalá. A je to pravda. Na jeden návrh potřebuju víc času než ostatní. Na jedno tetování taky. <br />
+          Vlastně i čaj si zalévám pomaleji.<br />
+
+          Mohla bych to zrychlit. Dělat rychlé konzultace. Střílet návrhy jeden za druhým. Tetovat tři klienty denně. Vlastně by to nebylo tak těžké.<br />
+
+          Jenže pak by to nebylo ono. Ta extra hodina nad návrhem často znamená rozdíl mezi „dobrým" a „výborným". Ten dodatečný den skicování může změnit „zajímavé" na „výjimečné". A čas, který věnuju každému detailu při tetování? <br />
+          Ten je prostě nenahraditelný.<br />
+
+          Takže ano, jsem pomalá. A víte co? Jsem na to docela hrdá. Protože některé věci prostě potřebují svůj čas.<br />
+
+          PS: Ten čaj ale možná fakt moc řeším.
+        </p>
+      </div>
+      <img
+        className="personImage"
+        src="/images/petra.png"
+        alt="Petra in a winter coat"
+      />
+      <div className="circleOverlay">
+        <div className="videoContainer">
+          {activeVideo && (
+            <video
+              key={activeVideo}
+              ref={videoRef}
+              className="overlayVideo"
+              loop
+              muted
+              playsInline
+              autoPlay
+            >
+              <source src={activeVideo} type="video/mp4" />
+            </video>
+          )}
         </div>
+        <canvas
+          ref={canvasRef}
+          width={250}
+          height={250}
+          className="drawingCanvas"
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={stopDrawing}
+          onMouseLeave={stopDrawing}
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={stopDrawing}
+        />
+        <div className="paperOverlay" />
       </div>
-
-
-      
-      <div class="parent">
-          <div class="div1">
-            <a href="https://instagram.com/art.petforman" className="instagramHandle" target="_blank" rel="noopener noreferrer">
-              @art.petforman
-            </a>
-          </div>
-          <div class="div2 imageWrapper"><div className="heart-top">
-              <img src="/images/heart.png" alt="" />
-            </div>
-            <div className="heart-bottom">
-              <img src="/images/heart.png" alt="" />
-            </div>
-          <div className="backgroundText">
-            Říkají mi, že jsem pomalá. A je to pravda. Na jeden návrh potřebuju víc času než ostatní. Na jedno tetování taky. <br />
-            Vlastně i čaj si zalévám pomaleji.<br />
-
-            Mohla bych to zrychlit. Dělat rychlé konzultace. Střílet návrhy jeden za druhým. Tetovat tři klienty denně. Vlastně by to nebylo tak těžké.<br />
-
-            Jenže pak by to nebylo ono. Ta extra hodina nad návrhem často znamená rozdíl mezi „dobrým“ a „výborným“. Ten dodatečný den skicování může změnit „zajímavé“ na „výjimečné“. A čas, který věnuju každému detailu při tetování? <br />
-            Ten je prostě nenahraditelný.<br />
-
-            Takže ano, jsem pomalá. A víte co? Jsem na to docela hrdá. Protože některé věci prostě potřebují svůj čas.<br />
-
-            PS: Ten čaj ale možná fakt moc řeším.
-          </div>
-          <img
-            className="personImage"
-            src="/images/petra.png"
-            alt="Petra in a winter coat"
-          />
-          <div className="circleOverlay">
-            <div className="videoContainer">
-              {activeVideo && (
-                <video
-                  key={activeVideo}
-                  ref={videoRef}
-                  className="overlayVideo"
-                  loop
-                  muted
-                  playsInline
-                  autoPlay
-                >
-                  <source src={activeVideo} type="video/mp4" />
-                </video>
-              )}
-            </div>
-            <canvas
-              ref={canvasRef}
-              width={250}
-              height={250}
-              className="drawingCanvas"
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={stopDrawing}
-              onMouseLeave={stopDrawing}
-              onTouchStart={startDrawing}
-              onTouchMove={draw}
-              onTouchEnd={stopDrawing}
-            />
-            <div className="paperOverlay" />
-          </div></div>
-          <div className="div3 bottomBanner">
-            <div className="scrollingContent">
-              {/* First set of scrolling items */}
-              {[...Array(12)].map((_, index) => (
-                <div key={`first-${index}`} className="scrollItem">
-                  <img src="/images/go.png" alt="" className="goIcon" /> 
-                  mám volné termíny.
-                </div>
-              ))}
-              {/* Duplicate set of scrolling items to ensure seamless looping */}
-              {[...Array(12)].map((_, index) => (
-                <div key={`second-${index}`} className="scrollItem">
-                  <img src="/images/go.png" alt="" className="goIcon" /> 
-                  mám volné termíny.
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="div4"></div>
-          <div class="div5"></div>
-          <div class="div6">
-          <h1 className="mainTitle">
-              petra<br />formánková.
-            </h1>
-            
-          </div>
-          <div class="div7"><Link href="/kontakt" className="navLinkWrapper">
-            <span className="tornNavLink">kontakt.</span>
-          </Link></div>
-          <div class="div8"></div>
-            <div 
-              className="navLinkWrapper div9"
-              onMouseEnter={() => handleMouseEnter('tetování')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <span className="tornNavLink">
-                tetování.
-              </span>
-              <img 
-                src={scribbles['tetování']}
-                alt=""
-                className={`scribbleOverlay ${activeVideo === videos['tetování'] ? 'visible' : ''}`}
-              />
-            </div>
-
-            <div 
-              className="navLinkWrapper div10"
-              onMouseEnter={() => handleMouseEnter('malba')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <span className="tornNavLink">
-                malba.
-              </span>
-              <img 
-                src={scribbles['malba']}
-                alt=""
-                className={`scribbleOverlay ${activeVideo === videos['malba'] ? 'visible' : ''}`}
-              />
-            </div>
-
-            <div 
-              className="navLinkWrapper div11"
-              onMouseEnter={() => handleMouseEnter('ilustrace')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <span className="tornNavLink">
-                ilustrace.
-              </span>
-              <img 
-                src={scribbles['ilustrace']}
-                alt=""
-                className={`scribbleOverlay ${activeVideo === videos['ilustrace'] ? 'visible' : ''}`}
-              />
-            </div>
-
-            <div 
-              className="navLinkWrapper div12"
-              onMouseEnter={() => handleMouseEnter('parte')}
-              onMouseLeave={handleMouseLeave}
-            >
-              <span className="tornNavLink">
-                parte.
-              </span>
-              <img 
-                src={scribbles['parte']}
-                alt=""
-                className={`scribbleOverlay ${activeVideo === videos['parte'] ? 'visible' : ''}`}
-              />
-            </div>
-      </div>
-          
-          
-      
-      
-      
     </div>
+  );
+
+  return (
+    <Layout activePage="home">
+      {homePageContent}
+    </Layout>
   );
 }

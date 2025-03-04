@@ -1,21 +1,16 @@
-import { useRouter } from 'next/router';
-import Head from 'next/head'
+import Head from 'next/head';
 import MainPage from '../components/MainPage';
 
 export default function HomePage() {
-  const router = useRouter();
-
   return (
     <>
       <Head>
-        <title>Hádej film</title>
-        <meta
-          name="description"
-          content="Oficiální stránka Hádej film. Každý den nová výzva!"
-        />
+        <title>Petra Formánková - Umělkyně</title>
+        <meta name="description" content="Tetování, malba, ilustrace a parte od Petry Formánkové" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainPage />
-
     </>
   );
 }
