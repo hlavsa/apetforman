@@ -919,30 +919,193 @@
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+  .bodyContainer {
+    padding: 10px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
   .page-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto;
+    gap: 15px 20px;
+    width: 100%;
+    padding: 0;
+    height: auto;
+    flex: 1;
   }
   
-  .nav-links-area {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    grid-column: span 3;
-    grid-row: auto;
+  /* Mobile layout: title at top spanning both columns */
+  .main-title-area {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    justify-self: flex-start;
+    align-self: flex-start;
+    margin: 20px 0 10px;
+    z-index: 5;
   }
   
+  /* Main content area (image with circle) spanning both columns */
   .main-content-area {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    height: auto;
+    z-index: 1;
+    margin-bottom: 30px;
+  }
+  
+  /* Navigation links in left column */
+  .mobile-nav-left {
     grid-column: 1;
-    max-width: 500px;
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  /* Contact in right column */
+  .mobile-nav-right {
+    grid-column: 2;
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  /* Bottom banner spanning both columns */
+  .bottom-banner-area {
+    grid-column: 1 / span 2;
+    grid-row: 4;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Instagram handle at the bottom */
+  .instagram-bottom {
+    grid-column: 1 / span 2;
+    grid-row: 5;
+    justify-self: center;
+    margin-top: 10px;
+  }
+  
+  /* Hide elements not needed on mobile */
+  .waveScribble, .backgroundText {
+    display: none;
+  }
+  
+  /* Homepage specific mobile styles */
+  .homepage-image {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .blue-heart-top {
+    position: absolute;
+    top: -60px;
+    left: 10px;
+    z-index: 10;
+    width: 70px;
+  }
+  
+  .blue-heart-bottom {
+    position: absolute;
+    bottom: -30px;
+    right: 10px;
+    z-index: 10;
+    width: 70px;
+  }
+  
+  .person-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 10px;
+  }
+  
+  .personImage {
+    width: 100%;
+    display: block;
+    clip-path: none;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .circleOverlay {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 180px;
+    top: auto;
+    bottom: -90px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #e6d6c7;
+    z-index: 2;
+  }
+  
+  /* Mobile scrolling banner */
+  .client-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  
+  .client-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    white-space: nowrap;
+  }
+  
+  .client-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Mobile navigation styles */
+  .tornNavLink {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    text-align: center;
+  }
+  
+  /* Contact form adjustments for mobile */
+  .contact-form-container {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .contact-hand {
+    position: relative;
+    top: 0;
+    width: 100%;
+    max-width: 300px;
     margin: 0 auto;
   }
   
-  .main-title-area,
-  .contact-link-area {
-    grid-column: 1;
-    justify-self: center;
+  .contactForm {
+    width: 100%;
+    max-width: 280px;
+    position: relative;
+    top: -80px;
+    margin: 0 auto;
+  }
+  
+  .formInput {
+    width: 100%;
   }
 }
-
-
