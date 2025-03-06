@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import React from "react";
-import { La_Belle_Aurore, IBM_Plex_Serif } from "next/font/google";
+import { Reenie_Beanie, IBM_Plex_Serif } from "next/font/google";
 
 const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ['latin', 'latin-ext'],
@@ -9,7 +9,7 @@ const ibmPlexSerif = IBM_Plex_Serif({
   display: 'swap',
 });
 
-const reenieBeanie = La_Belle_Aurore({
+const reenieBeanie = Reenie_Beanie({
   weight: "400",
   subsets: ["latin"],
   variable: '--font-reenie',
