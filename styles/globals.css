@@ -22,6 +22,18 @@
   font-family: var(--ibm-plex), serif;
 }
 
+input::placeholder,
+textarea::placeholder,
+.formInput::placeholder {
+  color: #16161D !important;
+}
+
+/* Make sure the input text itself is full opacity */
+.formInput {
+  color: #16161D;
+  opacity: 1;
+}
+
 .bodyContainer {
   min-height: 100vh;
   max-width: 1140px;
@@ -75,7 +87,7 @@
 
 .backgroundText {
   position: absolute;
-  top: 0;
+  top: 25%;
   left: 0;
   /* width: 100%;
   height: 100%; */
@@ -83,13 +95,12 @@
   align-items: center;
   justify-content: center;
   text-align: left;
-  padding: 2rem 4rem;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.6;
-  white-space: pre-wrap;
   color: #16161d38;
   z-index: 1;
+  padding: 0 2rem;
 }
 
 .personImage {
@@ -351,7 +362,8 @@
   width: 100%;
   max-width: 250px;
   z-index: 2;
-  top: -240px;
+  top: 130px;
+  left: 50px;
 }
 
 .formTitle {
@@ -479,7 +491,7 @@
 
 .heart-top {
   position: absolute;
-  top: -24px;
+  top: 4px;
   left: 14px;
   z-index: 40;
 }
@@ -706,7 +718,7 @@
   grid-column: span 3 / span 3;
   grid-row-start: 1;
   justify-self: center;
-  align-self: flex-start;
+  align-self: center;
   position: relative;
 }
 
@@ -723,7 +735,7 @@
   grid-column: 1;
   grid-row: 4;
   justify-self: flex-end;
-  align-self: flex-end;
+  align-self: center;
   position: relative;
 }
 
@@ -732,7 +744,7 @@
   grid-column: 1;
   grid-row: 6;
   justify-self: flex-end;
-  align-self: flex-end;
+  align-self: center;
   position: relative;
 }
 
@@ -758,25 +770,25 @@
 .nav-tetovani {
   grid-column: 3;
   grid-row: 3;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .nav-malba {
   grid-column: 3;
   grid-row: 4;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .nav-ilustrace {
   grid-column: 3;
   grid-row: 5;
-  align-self: flex-end;
+  align-self: center;
 }
 
 .nav-parte {
   grid-column: 3;
   grid-row: 6;
-  align-self: flex-end;
+  align-self: center;
 }
 
 /* Bottom banner - consistently positioned at bottom */
@@ -828,7 +840,7 @@
   height: auto;
   object-fit: contain;
   z-index: 0;
-  top: -420px;
+  top: -50px;
   left: 0;
 }
 
@@ -859,24 +871,6 @@
   border-radius: 50%;
   overflow: hidden;
   z-index: 10;
-}
-
-.background-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-  padding: 2rem 4rem;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  color: #16161d38;
-  z-index: 1;
-  font-family: var(--ibm-plex), serif;
 }
 
 /* Common element styles */
@@ -1108,4 +1102,246 @@
   .formInput {
     width: 100%;
   }
+}
+
+
+/* Updated page grid to maintain consistent center column width */
+.page-grid {
+  display: grid;
+  /* Modified column template to make center column more consistent */
+  grid-template-columns: minmax(100px, 1fr) minmax(300px, 500px) minmax(100px, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  column-gap: 16px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  position: relative;
+  background-color: #f9ece5;
+  padding: 0 16px; /* Add padding to prevent content from touching viewport edges */
+}
+
+/* Ensure the main content area stays within bounds */
+.main-content-area {
+  grid-column: 2;
+  grid-row: 2 / span 5;
+  justify-self: center;
+  align-self: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100%; /* Ensure content doesn't overflow its container */
+  overflow: hidden; /* Prevent any potential overflow */
+}
+
+/* Make sure images inside main content stay within bounds */
+.main-content-area img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive media query to adjust grid for smaller screens */
+@media (max-width: 768px) {
+  .page-grid {
+    grid-template-columns: 1fr minmax(280px, 80vw) 1fr;
+    padding: 0 10px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .page-grid {
+    grid-template-columns: 10px 1fr 10px;
+    column-gap: 8px;
+  }
+  
+  /* Adjust navigation items to take up less space */
+  .tornNavLink {
+    font-size: 1.3rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+
+/* Adjust the homepage image position */
+.homepage-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 60px; /* Add top padding to push content down */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Adjust the main person image */
+.personImage {
+  position: relative;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  z-index: 2;
+  margin-top: 30px; /* Add additional margin to the image itself */
+  transform: translateY(60px); /* Move the image down using transform */
+}
+
+/* Adjust the hearts to maintain proper positioning relative to the moved image */
+.heart-top {
+  position: absolute;
+  top: 130px; /* Adjusted to account for the moved image */
+  left: -6px;
+  z-index: 40;
+}
+
+.heart-bottom {
+  position: absolute;
+  bottom: 80px; /* Adjust this value to match the new image position */
+  right: 60px;
+  z-index: 40;
+}
+
+
+/* Adjust the circle overlay position to match the new image position */
+.circleOverlay {
+  position: absolute;
+  top: 64%; /* Adjust from original 66% + the amount we moved the image */
+  left: 34%;
+  width: 70%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Media query for responsive adjustments */
+@media (max-width: 768px) {
+  .homepage-image {
+    padding-top: 30px; /* Less padding on mobile */
+  }
+  
+  .personImage {
+    margin-top: 15px;
+    transform: translateY(10px);
+  }
+  
+  .backgroundText {
+    top: 30px;
+  }
+}
+
+
+
+
+/* Better dropdown positioning */
+.typeSelection {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  z-index: 100;
+}
+
+.dropdownOptions {
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  z-index: 50;
+  background: url("/images/torn-paper.png");
+  background-repeat: round;
+  padding: 4rem 0.5rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+/* Make sure each option button gets the click, not the padding */
+.dropdownOptions .typeButton {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  font-family: var(--reenie-beanie), cursive;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #16161D;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  pointer-events: auto; /* Ensure clicks go to the button */
+  position: relative; /* Keep this button above the padding */
+  z-index: 60;
+}
+
+.typeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  color: #16161D;
+  opacity: 0.6;
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.75rem;
+  font-family: var(--reenie-beanie), cursive;
+  border: none;
+  cursor: pointer;
+  z-index: 60; /* Ensure button stays above other elements */
+}
+
+
+/* Jamie corner - fixed class names to match JSX */
+.jamie-corner {
+  position: fixed;
+  top: -8px;
+  right: -8px;
+  z-index: 50;
+  cursor: pointer;
+}
+
+.jamieImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  transform: rotateY(180deg);
+}
+
+.jamieHover {
+  position: absolute;
+  top: 120%;
+  right: calc(100% - 50px);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.waveScribble {
+  width: 60px;
+  height: auto;
+  transform: rotateY(180deg) rotateX(180deg) rotateZ(-55deg);
+}
+
+.jamieText {
+  white-space: nowrap;
+  font-size: 1.5rem;
+  text-align: right;
+  line-height: 60%;
+  transform: rotateZ(32deg);
+}
+
+/* Fix the hover selector to match the actual class name */
+.jamie-corner:hover .jamieHover {
+  opacity: 1;
 }

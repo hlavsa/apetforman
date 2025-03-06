@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import React from "react";
 import { Reenie_Beanie, IBM_Plex_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const ibmPlexSerif = IBM_Plex_Serif({
   subsets: ['latin', 'latin-ext'],
@@ -26,6 +27,8 @@ function MyApp({ Component, pageProps }) {
         }
       `}</style>
       <Component {...pageProps} />
+      <Analytics />
+
     </div>
   );
 }
