@@ -39,6 +39,21 @@ export default function ArtCategoryPage({ category, items = [] }) {
             />
           </div>
         ))}
+        
+        {/* Add port-hand image at the bottom */}
+        <img
+          src="/images/port-hand.png"
+          alt="Port hand"
+          style={{
+            position: 'absolute',
+            bottom: '-20px',
+            left: '0',
+            width: '40%',
+            height: 'auto',
+            zIndex: 1,
+            pointerEvents: 'none'
+          }}
+        />
       </div>
 
       {/* Expanded view overlay */}

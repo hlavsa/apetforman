@@ -862,7 +862,7 @@ textarea::placeholder,
 
 .circle-overlay {
   position: absolute;
-  top: 66%;
+  top: 80%;
   left: 34%;
   width: 70%;
   height: 70%;
@@ -1195,7 +1195,7 @@ textarea::placeholder,
 
 .heart-bottom {
   position: absolute;
-  bottom: 80px; /* Adjust this value to match the new image position */
+  bottom: 0; /* Adjust this value to match the new image position */
   right: 60px;
   z-index: 40;
 }
@@ -1204,7 +1204,7 @@ textarea::placeholder,
 /* Adjust the circle overlay position to match the new image position */
 .circleOverlay {
   position: absolute;
-  top: 64%; /* Adjust from original 66% + the amount we moved the image */
+  top: 70%; /* Adjust from original 66% + the amount we moved the image */
   left: 34%;
   width: 70%;
   height: 60%;
