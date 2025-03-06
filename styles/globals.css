@@ -363,7 +363,7 @@ textarea::placeholder,
   max-width: 250px;
   z-index: 2;
   top: 130px;
-  left: 50px;
+  left: 105px;
 }
 
 .formTitle {
@@ -836,12 +836,11 @@ textarea::placeholder,
 
 .contact-hand {
   position: absolute;
-  width: 110%;
+  width: 80%;
   height: auto;
   object-fit: contain;
   z-index: 0;
   top: -50px;
-  left: 0;
 }
 
 .contact-form-wrapper {
@@ -1109,7 +1108,7 @@ textarea::placeholder,
 .page-grid {
   display: grid;
   /* Modified column template to make center column more consistent */
-  grid-template-columns: minmax(100px, 1fr) minmax(300px, 500px) minmax(100px, 1fr);
+  grid-template-columns: minmax(100px, 1fr) minmax(500px, 600px) minmax(100px, 1fr);
   grid-template-rows: repeat(7, 1fr);
   column-gap: 16px;
   justify-content: center;
@@ -1170,7 +1169,6 @@ textarea::placeholder,
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: 60px; /* Add top padding to push content down */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1344,4 +1342,180 @@ textarea::placeholder,
 /* Fix the hover selector to match the actual class name */
 .jamie-corner:hover .jamieHover {
   opacity: 1;
+}
+
+
+/* Additional CSS for art items and expanded view */
+
+/* Make art items interactive with hover effects */
+.art-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.art-item:hover {
+  transform: scale(1.02);
+}
+
+.art-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(22, 22, 29, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.art-item:hover::after {
+  opacity: 1;
+}
+
+.art-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Expanded image overlay */
+.expanded-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(249, 236, 229, 0.95);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.expanded-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  background-color: #f9ece5;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); }
+  to { transform: scale(1); }
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: url("/images/torn-paper.png") center/cover no-repeat;
+  border: none;
+  padding: 8px 15px;
+  font-size: 1.5rem;
+  font-family: var(--reenie-beanie), cursive;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.close-button:hover {
+  transform: scale(1.05);
+}
+
+.expanded-image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(90vh - 60px);
+  object-fit: contain;
+}
+
+.image-title {
+  padding: 1rem;
+  font-family: var(--reenie-beanie), cursive;
+  font-size: 1.5rem;
+  text-align: center;
+  background: url("/images/torn-paper.png") center/cover no-repeat;
+  margin: 0 auto;
+  max-width: 80%;
+  transform: translateY(-30px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .expanded-content {
+    max-width: 95%;
+  }
+  
+  .expanded-overlay {
+    padding: 1rem;
+  }
+  
+  .image-title {
+    font-size: 1.2rem;
+    transform: translateY(-20px);
+  }
+}
+
+.kontaktWave {
+  left: 80px;
+  top: 40%;
+  width: 140px;
+  height: auto;
+  position: absolute;
+  transform: rotateX(180deg) rotateZ(-20deg);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.tetovaniWave {
+  left: -15px;
+  top: -50%;
+  width: 80px;
+  height: auto;
+  position: absolute;
+  transform: rotateX(180deg) rotateZ(-245deg);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.malbaWave {
+  left: -15px;
+  top: -50%;
+  width: 80px;
+  height: auto;
+  position: absolute;
+  transform: rotateX(180deg) rotateZ(-245deg);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.ilustraceWave {
+  left: -15px;
+  top: -50%;
+  width: 80px;
+  height: auto;
+  position: absolute;
+  transform: rotateX(180deg) rotateZ(-245deg);
+  pointer-events: none;
+  z-index: 50;
+}
+
+.parteWave {
+  left: -15px;
+  top: -50%;
 }

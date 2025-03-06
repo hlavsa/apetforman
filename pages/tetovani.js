@@ -9,6 +9,12 @@ export default function TetovaniPage() {
     { id: 2, image: '/images/tetovani/tetov2.jpg', tall: true },
     { id: 3, image: '/images/tetovani/tetov3.jpg' },
     { id: 4, image: '/images/tetovani/tetov4.jpg' },
+    { id: 5, image: '/images/tetovani/tetov3.jpg' },
+    { id: 6, image: '/images/tetovani/tetov4.jpg' },
+    { id: 7, image: '/images/tetovani/tetov3.jpg' },
+    { id: 8, image: '/images/tetovani/tetov4.jpg' },
+    { id: 9, image: '/images/tetovani/tetov3.jpg' },
+    { id: 10, image: '/images/tetovani/tetov4.jpg' },
   ];
 
   return (

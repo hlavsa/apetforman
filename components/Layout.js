@@ -120,8 +120,10 @@ export default function Layout({ children, activePage = 'home' }) {
                   className="tornNavLink instagramHandle" 
                   onMouseEnter={() => handleSimpleHover('ig', true)}
                   onMouseLeave={() => handleSimpleHover('ig', false)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+
                 >
-                  ← domů.
+                  <img width="32" height="32" src="https://img.icons8.com/puffy/32/left--v1.png" alt="left--v1"/> domů.
                   <img 
                     src={scribbles['ig']}
                     alt=""
@@ -156,85 +158,106 @@ export default function Layout({ children, activePage = 'home' }) {
             </div>
             
             {/* Only show navigation links if we're not on that specific page - Desktop */}
-            {activePage !== 'tetovani' && (
-              <div className="nav-tetovani navLinkWrapper">
-                <Link 
-                  href="/tetovani" 
-                  className="navLinkWrapper"
-                  onMouseEnter={() => handleSimpleHover('tetování', true)}
-                  onMouseLeave={() => handleSimpleHover('tetování', false)}
-                >
-                  <span className="tornNavLink">
-                    tetování.
-                  </span>
-                  <img 
-                    src={scribbles['tetování']}
-                    alt=""
-                    className={`scribbleOverlay ${hoverStates['tetování'] ? 'visible' : ''}`}
-                  />
-                </Link>
-              </div>
+            {/* Instead of conditionally hiding, always show links with wave scribble when active */}
+            <div className="nav-tetovani navLinkWrapper">
+            <Link 
+                href="/tetovani" 
+                className="navLinkWrapper"
+                onMouseEnter={() => handleSimpleHover('tetování', true)}
+                onMouseLeave={() => handleSimpleHover('tetování', false)}
+            >
+                <span className="tornNavLink">
+                tetování.
+                </span>
+                <img 
+                src={scribbles['tetování']}
+                alt=""
+                className={`scribbleOverlay ${hoverStates['tetování'] ? 'visible' : ''}`}
+                />
+            </Link>
+            {activePage === 'tetovani' && (
+                <img 
+                src="/images/wave-scribble.png" 
+                alt="" 
+                className=" tetovaniWave" 
+                />
             )}
-            
-            {activePage !== 'malba' && (
-              <div className="nav-malba navLinkWrapper">
-                <Link 
-                  href="/malba" 
-                  className="navLinkWrapper"
-                  onMouseEnter={() => handleSimpleHover('malba', true)}
-                  onMouseLeave={() => handleSimpleHover('malba', false)}
-                >
-                  <span className="tornNavLink">
-                    malba.
-                  </span>
-                  <img 
-                    src={scribbles['malba']}
-                    alt=""
-                    className={`scribbleOverlay ${hoverStates['malba'] ? 'visible' : ''}`}
-                  />
-                </Link>
-              </div>
+            </div>
+
+            <div className="nav-malba navLinkWrapper">
+            <Link 
+                href="/malba" 
+                className="navLinkWrapper"
+                onMouseEnter={() => handleSimpleHover('malba', true)}
+                onMouseLeave={() => handleSimpleHover('malba', false)}
+            >
+                <span className="tornNavLink">
+                malba.
+                </span>
+                <img 
+                src={scribbles['malba']}
+                alt=""
+                className={`scribbleOverlay ${hoverStates['malba'] ? 'visible' : ''}`}
+                />
+            </Link>
+            {activePage === 'malba' && (
+                <img 
+                src="/images/wave-scribble.png" 
+                alt="" 
+                className=" malbaWave" 
+                />
             )}
-            
-            {activePage !== 'ilustrace' && (
-              <div className="nav-ilustrace navLinkWrapper">
-                <Link 
-                  href="/ilustrace" 
-                  className="navLinkWrapper"
-                  onMouseEnter={() => handleSimpleHover('ilustrace', true)}
-                  onMouseLeave={() => handleSimpleHover('ilustrace', false)}
-                >
-                  <span className="tornNavLink">
-                    ilustrace.
-                  </span>
-                  <img 
-                    src={scribbles['ilustrace']}
-                    alt=""
-                    className={`scribbleOverlay ${hoverStates['ilustrace'] ? 'visible' : ''}`}
-                  />
-                </Link>
-              </div>
+            </div>
+
+            <div className="nav-ilustrace navLinkWrapper">
+            <Link 
+                href="/ilustrace" 
+                className="navLinkWrapper"
+                onMouseEnter={() => handleSimpleHover('ilustrace', true)}
+                onMouseLeave={() => handleSimpleHover('ilustrace', false)}
+            >
+                <span className="tornNavLink">
+                ilustrace.
+                </span>
+                <img 
+                src={scribbles['ilustrace']}
+                alt=""
+                className={`scribbleOverlay ${hoverStates['ilustrace'] ? 'visible' : ''}`}
+                />
+            </Link>
+            {activePage === 'ilustrace' && (
+                <img 
+                src="/images/wave-scribble.png" 
+                alt="" 
+                className=" ilustraceWave" 
+                />
             )}
-            
-            {activePage !== 'parte' && (
-              <div className="nav-parte navLinkWrapper">
-                <Link 
-                  href="/parte" 
-                  className="navLinkWrapper"
-                  onMouseEnter={() => handleSimpleHover('parte', true)}
-                  onMouseLeave={() => handleSimpleHover('parte', false)}
-                >
-                  <span className="tornNavLink">
-                    parte.
-                  </span>
-                  <img 
-                    src={scribbles['parte']}
-                    alt=""
-                    className={`scribbleOverlay ${hoverStates['parte'] ? 'visible' : ''}`}
-                  />
-                </Link>
-              </div>
+            </div>
+
+            <div className="nav-parte navLinkWrapper">
+            <Link 
+                href="/parte" 
+                className="navLinkWrapper"
+                onMouseEnter={() => handleSimpleHover('parte', true)}
+                onMouseLeave={() => handleSimpleHover('parte', false)}
+            >
+                <span className="tornNavLink">
+                parte.
+                </span>
+                <img 
+                src={scribbles['parte']}
+                alt=""
+                className={`scribbleOverlay ${hoverStates['parte'] ? 'visible' : ''}`}
+                />
+            </Link>
+            {activePage === 'parte' && (
+                <img 
+                src="/images/wave-scribble.png" 
+                alt="" 
+                className=" parteWave" 
+                />
             )}
+            </div>
           </>
         ) : (
           // Mobile Navigation Structure - two columns
