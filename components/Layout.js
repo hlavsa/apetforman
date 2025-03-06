@@ -236,7 +236,7 @@ export default function Layout({ children, activePage = 'home' }) {
 
             <div className="nav-parte navLinkWrapper">
             <Link 
-                href="/parte" 
+                href="/" 
                 className="navLinkWrapper"
                 onMouseEnter={() => handleSimpleHover('parte', true)}
                 onMouseLeave={() => handleSimpleHover('parte', false)}
