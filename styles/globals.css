@@ -1574,7 +1574,7 @@ textarea::placeholder,
     position: absolute;
     left: 36%;
     transform: translateX(-50%);
-    width: 240px;
+    width: 260px;
     height: 240px;
     top: 27%;
     border-radius: 50%;
@@ -1701,7 +1701,7 @@ textarea::placeholder,
   .mobile-nav-item, .client-status, a.instagramHandle {
     flex: 0 1 auto; /* Allow shrinking */
     max-width: 100%;
-    font-size: 1.1rem; /* Slightly smaller font */
+    font-size: 1.5rem; /* Slightly smaller font */
     padding: 5px 10px;
     box-sizing: border-box;
     white-space: normal; /* Allow text wrapping */
@@ -1712,7 +1712,7 @@ textarea::placeholder,
   .client-status {
     display: inline-flex;
     align-items: center;
-    font-size: 1rem;
+    font-size: 1.3rem;
     padding: 5px 8px;
     white-space: nowrap;
     overflow: hidden;
@@ -1731,7 +1731,7 @@ textarea::placeholder,
   
   /* Make Instagram handle break properly */
   a.instagramHandle {
-    font-size: 1rem;
+    font-size: 1.5rem;
     padding: 4px 8px;
     display: inline-flex;
     align-items: center;
@@ -1818,7 +1818,6 @@ html, body {
   box-sizing: border-box;
   padding: 0 10px;
   margin-top: auto; /* Push to bottom of available space */
-  margin-bottom: 10px;
 }
 
 /* Ensure the image doesn't cause overflow */
@@ -1837,7 +1836,6 @@ html, body {
   
   /* Ensure main title doesn't add extra height */
   .mainTitle {
-    margin: 10px 0;
     padding: 0 15px;
   }
   
@@ -1902,7 +1900,6 @@ html, body {
   box-sizing: border-box;
   padding: 0 10px;
   margin-top: auto; /* Push to bottom of available space */
-  margin-bottom: 10px;
 }
 
 /* Ensure the image doesn't cause overflow */
@@ -1921,7 +1918,6 @@ html, body {
   
   /* Ensure main title doesn't add extra height */
   .mainTitle {
-    margin: 10px 0;
     padding: 0 15px;
   }
   
@@ -1929,5 +1925,9 @@ html, body {
   .circleOverlay {
     max-height: 40vh;
     max-width: 40vh;
+  }
+
+  .mobile-nav-area .mobile-nav-row:last-child {
+    margin-bottom: 0;
   }
 }
