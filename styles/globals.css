@@ -1677,3 +1677,257 @@ textarea::placeholder,
     height: 70%;
   }
 }
+
+/* Fix for mobile navigation overflow */
+@media (max-width: 768px) {
+  /* Ensure proper wrapping in mobile navigation area */
+  .mobile-nav-area {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px; /* Reduced horizontal padding */
+  }
+  
+  /* Make rows flexible and allow wrapping */
+  .mobile-nav-row {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 8px;
+    gap: 5px; /* Add gap between items */
+  }
+  
+  /* Make items shrink to fit and prevent overflow */
+  .mobile-nav-item, .client-status, a.instagramHandle {
+    flex: 0 1 auto; /* Allow shrinking */
+    max-width: 100%;
+    font-size: 1.1rem; /* Slightly smaller font */
+    padding: 5px 10px;
+    box-sizing: border-box;
+    white-space: normal; /* Allow text wrapping */
+    text-align: center;
+  }
+  
+  /* Specific fix for client status */
+  .client-status {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1rem;
+    padding: 5px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 45%; /* Don't take more than half the width */
+  }
+  
+  /* Make sure the icon doesn't shrink too much */
+  .client-icon {
+    min-width: 12px;
+    width: 12px;
+    height: 12px;
+    margin-right: 4px;
+    flex-shrink: 0; /* Prevent icon from shrinking */
+  }
+  
+  /* Make Instagram handle break properly */
+  a.instagramHandle {
+    font-size: 1rem;
+    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  
+  a.instagramHandle svg {
+    width: 12px;
+    height: 12px;
+    margin-right: 3px;
+    flex-shrink: 0;
+  }
+  
+  /* For extra small devices, adjust layout even more */
+  @media (max-width: 374px) {
+    .mobile-nav-item, .client-status, a.instagramHandle {
+      font-size: 0.9rem;
+      padding: 4px 7px;
+    }
+    
+    .mobile-nav-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .client-status, a.instagramHandle {
+      max-width: 100%;
+      margin-top: 5px;
+    }
+  }
+}
+
+/* Fix for vertical scrolling issues */
+
+/* Main container setup */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Use a more reliable height method for mobile */
+.bodyContainer {
+  min-height: 100vh; /* Fallback */
+  min-height: -webkit-fill-available; /* For iOS Safari */
+  height: 100vh;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9ece5;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ensure mobile-page fits within viewport */
+.mobile-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Constrain main content area height */
+.main-content-area {
+  flex: 1;
+  max-height: 65vh; /* Prevent excessive height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Navigation area positioning */
+.mobile-nav-area {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
+  margin-top: auto; /* Push to bottom of available space */
+  margin-bottom: 10px;
+}
+
+/* Ensure the image doesn't cause overflow */
+.personImage {
+  max-height: 65vh;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  /* Handle iOS Safari height issues */
+  .bodyContainer {
+    height: -webkit-fill-available;
+  }
+  
+  /* Ensure main title doesn't add extra height */
+  .mainTitle {
+    margin: 10px 0;
+    padding: 0 15px;
+  }
+  
+  /* Make sure circle overlay is contained */
+  .circleOverlay {
+    max-height: 40vh;
+    max-width: 40vh;
+  }
+}
+
+
+/* Fix for vertical scrolling issues */
+
+/* Main container setup */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Use a more reliable height method for mobile */
+.bodyContainer {
+  min-height: 100vh; /* Fallback */
+  min-height: -webkit-fill-available; /* For iOS Safari */
+  height: 100vh;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9ece5;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ensure mobile-page fits within viewport */
+.mobile-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Constrain main content area height */
+.main-content-area {
+  flex: 1;
+  max-height: 65vh; /* Prevent excessive height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Navigation area positioning */
+.mobile-nav-area {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
+  margin-top: auto; /* Push to bottom of available space */
+  margin-bottom: 10px;
+}
+
+/* Ensure the image doesn't cause overflow */
+.personImage {
+  max-height: 65vh;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  /* Handle iOS Safari height issues */
+  .bodyContainer {
+    height: -webkit-fill-available;
+  }
+  
+  /* Ensure main title doesn't add extra height */
+  .mainTitle {
+    margin: 10px 0;
+    padding: 0 15px;
+  }
+  
+  /* Make sure circle overlay is contained */
+  .circleOverlay {
+    max-height: 40vh;
+    max-width: 40vh;
+  }
+}
