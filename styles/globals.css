@@ -1581,10 +1581,6 @@ textarea::placeholder,
     overflow: hidden;
     z-index: 5;
   }
-
-  * {
-   outline: 1px solid red;
-  }
   
   /* Navigation styling on mobile */
   .page-grid {
