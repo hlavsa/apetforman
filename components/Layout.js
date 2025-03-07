@@ -73,7 +73,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
       >
         <img src="/images/jamie.png" alt="Jamie the dog" className="jamieImage" />
         <div className="jamieHover">
-          <span className="jamieText">eurasier<br />jamie.</span>
+          <span className="jamieText">eurasier<br />Jamie.</span>
           <img src="/images/wave-scribble.png" alt="" className="waveScribble" />
         </div>
       </div>
@@ -85,7 +85,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
           {/* Main title - always in the same position */}
           <div className="main-title-area">
             <h1 className="mainTitle">
-              petra<br />formánková.
+              Petra<br />Formánková.
             </h1>
           </div>
           
