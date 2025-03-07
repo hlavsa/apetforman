@@ -12,7 +12,6 @@ export default function HomePage() {
         <meta name="description" content="Tetování, malba, ilustrace a parte od Petry Formánkové" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://use.typekit.net/nyc4vlf.css"></link>
       </Head>
       <MainPage />
     </>
