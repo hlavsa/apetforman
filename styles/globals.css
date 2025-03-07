@@ -1,5 +1,18 @@
 /* global.css */
 
+@import url("https://use.typekit.net/nyc4vlf.css");
+
+/* Define font variables */
+:root {
+  /* Define the Reenie Beanie font variable */
+  --reenie-font: "reenie-beanie", cursive;
+}
+
+/* Global box sizing */
+* {
+  box-sizing: border-box;
+}
+
 /* Replace all instances of 'Reenie Beanie' with the variable */
 .instagramHandle,
 .contactSection,
@@ -14,7 +27,9 @@
 .typeButton,
 .submitButton,
 .homeLink {
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
 }
 
 /* Replace IBM Plex Serif with the variable */
@@ -127,8 +142,8 @@ textarea::placeholder,
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 70%;
-  height: 80%;
+  width: 65%;
+  height: 65%;
   transform: translate(-50%, -50%);
   z-index: 4;
   border-radius: 50%;
@@ -362,8 +377,8 @@ textarea::placeholder,
   width: 100%;
   max-width: 250px;
   z-index: 2;
-  top: 130px;
-  left: 105px;
+  top: -160px;
+  left: 110px;
 }
 
 .formTitle {
@@ -396,7 +411,9 @@ textarea::placeholder,
   text-align: center;
   padding: 0.5rem 1rem;
   font-size: 1.75rem;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
   border: none;
   cursor: pointer;
 }
@@ -442,7 +459,9 @@ textarea::placeholder,
   text-align: center;
   padding: 0.5rem 1rem;
   font-size: 1.5rem;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -840,7 +859,7 @@ textarea::placeholder,
   height: auto;
   object-fit: contain;
   z-index: 0;
-  top: -50px;
+  top: -320px;
 }
 
 .contact-form-wrapper {
@@ -882,7 +901,9 @@ textarea::placeholder,
   z-index: 0;
   color: #16161D;
   cursor: pointer;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .main-title {
@@ -890,7 +911,9 @@ textarea::placeholder,
   margin: 0;
   font-weight: normal;
   color: #16161D;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
 }
 
 .scribble-overlay {
@@ -1175,7 +1198,6 @@ textarea::placeholder,
   height: auto;
   object-fit: contain;
   z-index: 2;
-  margin-top: 30px; /* Add additional margin to the image itself */
   transform: translateY(60px); /* Move the image down using transform */
 }
 
@@ -1198,10 +1220,10 @@ textarea::placeholder,
 /* Adjust the circle overlay position to match the new image position */
 .circleOverlay {
   position: absolute;
-  top: 70%; /* Adjust from original 66% + the amount we moved the image */
+  top: 68%; /* Adjust from original 66% + the amount we moved the image */
   left: 34%;
-  width: 70%;
-  height: 60%;
+  width: 75%;
+  height: 75%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
   overflow: hidden;
@@ -1257,7 +1279,9 @@ textarea::placeholder,
   text-align: center;
   padding: 0.5rem 1rem;
   font-size: 1.5rem;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -1283,7 +1307,9 @@ textarea::placeholder,
   text-align: center;
   padding: 0.5rem 1rem;
   font-size: 1.75rem;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
   border: none;
   cursor: pointer;
   z-index: 60; /* Ensure button stays above other elements */
@@ -1421,7 +1447,9 @@ textarea::placeholder,
   border: none;
   padding: 8px 15px;
   font-size: 1.5rem;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
   cursor: pointer;
   z-index: 10;
   transition: transform 0.2s ease;
@@ -1440,7 +1468,9 @@ textarea::placeholder,
 
 .image-title {
   padding: 1rem;
-  font-family: var(--reenie-beanie), cursive;
+  font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
   font-size: 1.5rem;
   text-align: center;
   background: url("/images/torn-paper.png") center/cover no-repeat;
@@ -1612,7 +1642,9 @@ textarea::placeholder,
     padding: 6px 15px;
     background: url("/images/torn-paper.png") center/cover no-repeat;
     font-size: 1.3rem;
-    font-family: var(--reenie-beanie), cursive;
+    font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
     color: #16161D;
     display: inline-block;
     white-space: nowrap;
@@ -1626,7 +1658,9 @@ textarea::placeholder,
     gap: 5px;
     padding: 8px 12px;
     font-size: 1.2rem;
-    font-family: var(--reenie-beanie), cursive;
+    font-family: "reenie-beanie", cursive;
+  font-weight: 500;
+  font-style: normal;
     white-space: nowrap;
   }
   
@@ -1800,7 +1834,7 @@ html, body {
 /* Constrain main content area height */
 .main-content-area {
   flex: 1;
-  max-height: 65vh; /* Prevent excessive height */
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1882,7 +1916,7 @@ html, body {
 /* Constrain main content area height */
 .main-content-area {
   flex: 1;
-  max-height: 65vh; /* Prevent excessive height */
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1927,3 +1961,4 @@ html, body {
     margin-bottom: 0;
   }
 }
+
