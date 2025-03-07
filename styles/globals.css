@@ -87,7 +87,7 @@ textarea::placeholder,
 
 .backgroundText {
   position: absolute;
-  top: 25%;
+  top: 15%;
   left: 0;
   /* width: 100%;
   height: 100%; */
@@ -491,7 +491,7 @@ textarea::placeholder,
 
 .heart-top {
   position: absolute;
-  top: 4px;
+  top: -10px;
   left: 14px;
   z-index: 40;
 }
@@ -986,11 +986,6 @@ textarea::placeholder,
     margin-top: 10px;
   }
   
-  /* Hide elements not needed on mobile */
-  .waveScribble, .backgroundText {
-    display: none;
-  }
-  
   /* Homepage specific mobile styles */
   .homepage-image {
     position: relative;
@@ -1040,7 +1035,6 @@ textarea::placeholder,
     bottom: -90px;
     border-radius: 50%;
     overflow: hidden;
-    background: #e6d6c7;
     z-index: 2;
   }
   
@@ -1188,7 +1182,7 @@ textarea::placeholder,
 /* Adjust the hearts to maintain proper positioning relative to the moved image */
 .heart-top {
   position: absolute;
-  top: 130px; /* Adjusted to account for the moved image */
+  top: 110px; /* Adjusted to account for the moved image */
   left: -6px;
   z-index: 40;
 }
@@ -1518,4 +1512,168 @@ textarea::placeholder,
 .parteWave {
   left: -15px;
   top: -50%;
+}
+
+/* Mobile-specific layout adjustments */
+@media (max-width: 768px) {
+  /* Base structure adjustments */
+  .bodyContainer {
+    padding: 0;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f9ece5;
+  }
+  
+  /* Hide hearts on mobile */
+  .heart-top, .heart-bottom {
+    display: none;
+  }
+  
+  /* Fix the image/person cutout */
+  .homepage-image {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0px;
+  }
+  
+  /* Title positioning */
+  .mainTitle {
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: normal;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .jamie-corner {
+    right: -10px;
+  }
+
+  .jamieHover .jamieText {
+    font-size: 1rem;
+  }
+  
+  /* Adjust the main image for mobile */
+  .personImage {
+    width: 90%; 
+    height: auto;
+    display: block;
+    position: relative;
+    z-index: 2;
+    margin: 0 auto;
+    clip-path: none;
+    transform: translateY(0);
+  }
+  
+  /* Move the circle overlay to center of image */
+  .circleOverlay {
+    position: absolute;
+    left: 36%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 240px;
+    top: 27%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 5;
+  }
+
+  * {
+   outline: 1px solid red;
+  }
+  
+  /* Navigation styling on mobile */
+  .page-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    height: auto;
+    width: 100%;
+  }
+  
+  /* Layout for mobile navigation */
+  .mobile-nav-area {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem 0;
+  }
+  
+  /* Navigation links on mobile */
+  .mobile-nav-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  /* Individual navigation items */
+  .mobile-nav-item {
+    padding: 6px 15px;
+    background: url("/images/torn-paper.png") center/cover no-repeat;
+    font-size: 1.3rem;
+    font-family: var(--reenie-beanie), cursive;
+    color: #16161D;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  
+  /* Client status indicator */
+  .client-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    font-family: var(--reenie-beanie), cursive;
+    white-space: nowrap;
+  }
+  
+  .client-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  /* Instagram handle at bottom */
+  .instagram-bottom {
+    margin-top: 15px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .instagram-bottom a {
+    font-size: 1.4rem;
+    padding: 5px 15px;
+    background: url("/images/torn-paper.png") center/cover no-repeat;
+    display: inline-block;
+  }
+  
+  /* Hide unneeded elements on mobile */
+  .backgroundText, .main-title-area, .contact-link-area,
+  .nav-tetovani, .nav-malba, .nav-ilustrace, .nav-parte,
+  .bottom-banner-area {
+    display: none;
+  }
+  
+  /* Blue heart positioning */
+  .blue-heart {
+    position: absolute;
+    top: 30px;
+    left: 10%;
+    transform: translateZ(-59%);
+    z-index: 15;
+    width: 110px;
+    height: 40px;
+    transform: rotate(-20deg);
+  }
+
+  .videoContainer {
+    width: 70%;
+    height: 70%;
+  }
 }
