@@ -55,7 +55,7 @@ export default function TetovaniPage() {
           alignItems: 'flex-end'
         }}>
           <img
-            src="/images/port-hand.png"
+            src="/images/port-hand.webp"
             alt="Port hand"
             style={{
               width: '40%',

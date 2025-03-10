@@ -67,7 +67,7 @@ export default function KontaktPage() {
   const kontaktContent = (
     <div className="contact-form-container">
       <img
-        src="/images/contact-hand.png"
+        src="/images/contact-hand.webp"
         alt="Contact hand"
         className="contact-hand"
       />

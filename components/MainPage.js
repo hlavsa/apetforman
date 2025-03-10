@@ -182,7 +182,7 @@ export default function MainPage() {
       
       <img
         className="personImage"
-        src="/images/petra.png"
+        src="/images/petra.webp"
         alt="Petra in a winter coat"
       />
       

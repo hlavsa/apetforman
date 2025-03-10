@@ -71,10 +71,10 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
         onMouseEnter={() => handleSimpleHover('jamie', true)}
         onMouseLeave={() => handleSimpleHover('jamie', false)}
       >
-        <img src="/images/jamie.png" alt="Jamie the dog" className="jamieImage" />
+        <img src="/images/jamie.webp" alt="Jamie the dog" className="jamieImage" />
         <div className="jamieHover">
           <span className="jamieText">eurasier<br />Jamie.</span>
-          <img src="/images/wave-scribble.png" alt="" className="waveScribble" />
+          <img src="/images/wave-scribble.webp" alt="" className="waveScribble" />
         </div>
       </div>
       
@@ -158,7 +158,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
             </Link>
             {activePage === 'kontakt' && (
               <img 
-                src="/images/wave-scribble.png" 
+                src="/images/wave-scribble.webp" 
                 alt="" 
                 className="waveScribble kontaktWave" 
               />
@@ -182,7 +182,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
             </Link>
             {activePage === 'tetovani' && (
               <img 
-                src="/images/wave-scribble.png" 
+                src="/images/wave-scribble.webp" 
                 alt="" 
                 className="tetovaniWave" 
               />
@@ -205,7 +205,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
             </Link>
             {activePage === 'malba' && (
               <img 
-                src="/images/wave-scribble.png" 
+                src="/images/wave-scribble.webp" 
                 alt="" 
                 className="malbaWave" 
               />
@@ -228,7 +228,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
             </Link>
             {activePage === 'ilustrace' && (
               <img 
-                src="/images/wave-scribble.png" 
+                src="/images/wave-scribble.webp" 
                 alt="" 
                 className="ilustraceWave" 
               />
@@ -251,7 +251,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
             </Link>
             {activePage === 'parte' && (
               <img 
-                src="/images/wave-scribble.png" 
+                src="/images/wave-scribble.webp" 
                 alt="" 
                 className="parteWave" 
               />
