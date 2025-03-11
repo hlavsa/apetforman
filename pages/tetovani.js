@@ -6,14 +6,14 @@ export default function TetovaniPage() {
   
   // Sample gallery items for tetování
   const tetovaniItems = [
-    { id: 1, image: '/images/tetovani/tetov1.jpg', large: true },
+    /* { id: 1, image: '/images/tetovani/tetov1.jpg', large: true },
     { id: 2, image: '/images/tetovani/tetov2.jpg', tall: true },
     { id: 3, image: '/images/tetovani/tetov3.jpg' },
     { id: 4, image: '/images/tetovani/tetov4.jpg' },
     { id: 5, image: '/images/tetovani/tetov3.jpg' },
     { id: 6, image: '/images/tetovani/tetov4.jpg' },
     { id: 7, image: '/images/tetovani/tetov3.jpg' },
-    { id: 8, image: '/images/tetovani/tetov4.jpg' },
+    { id: 8, image: '/images/tetovani/tetov4.jpg' }, */
   ];
 
   // Handle click on an artwork
@@ -29,16 +29,54 @@ export default function TetovaniPage() {
   return (
     <Layout activePage="tetovani">
       <>
-        <div className="art-page-content">
-          {tetovaniItems.map(item => (
-            <div 
-              key={item.id} 
-              className={`art-item ${item.large ? 'large' : ''} ${item.tall ? 'tall' : ''}`}
-              onClick={() => handleItemClick(item)}
-            >
-              <img src={item.image} alt={`Tetování - ${item.id}`} />
+        <div className="art-page-content" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gridTemplateRows: 'auto auto',
+          gap: '20px',
+          width: '100%',
+          height: '100%'
+        }}>
+          {tetovaniItems.length > 0 ? (
+            tetovaniItems.map(item => (
+              <div 
+                key={item.id} 
+                className={`art-item ${item.large ? 'large' : ''} ${item.tall ? 'tall' : ''}`}
+                onClick={() => handleItemClick(item)}
+              >
+                <img src={item.image} alt={`Tetování - ${item.id}`} />
+              </div>
+            ))
+          ) : (
+            <div className="no-images-message" style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              height: '100%',
+              gridColumn: 'span 2',
+              padding: '2rem'
+            }}>
+              <div style={{
+                padding: '1.5rem 2rem',
+                background: 'url("/images/torn-paper.webp") center/cover no-repeat',
+                display: 'inline-block',
+                position: 'relative'
+              }}>
+                <p style={{
+                  fontFamily: 'var(--reenie-beanie), sans-serif',
+                  fontSize: '2.5rem',
+                  fontWeight: '400',
+                  color: '#16161D',
+                  margin: 0,
+                  position: 'relative',
+                  zIndex: 2
+                }}>
+                  zatím bez obrázků
+                </p>
+              </div>
             </div>
-          ))}
+          )}
         </div>
         
         {/* Port hand with more extreme positioning and styling */}

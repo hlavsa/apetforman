@@ -27,7 +27,7 @@ export default function MainPage() {
   }, []);
   
   const videos = {
-    tetování: '/videos/tetovani.mp4',
+    tetování: '/videos/tetovani.webm',
     malba: '/videos/malba.mp4',
     ilustrace: '/videos/ilustrace.mp4',
     parte: '/videos/parte.mp4',
