@@ -571,7 +571,7 @@ export default function PartePage() {
 
       {/* FAQ Section */}
       <section id="faq" className={styles.faqSection}>
-        <h2 className={styles.sectionTitle}>ODPOVĚDI NA VAŠE OTÁZKY</h2>
+        <h2 className={styles.sectionTitle}>REKAPITULACE</h2>
         <p className={styles.sectionIntro}>
           Zde najdete odpovědi na nejčastější otázky. Pokud byste se chtěli zeptat na cokoliv dalšího, neváhejte mě kontaktovat.
         </p>
