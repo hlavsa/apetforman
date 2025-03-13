@@ -6,9 +6,9 @@ export default function MalbaPage() {
   
   // Sample gallery items for tetování
   const malbaItems = [
-    /* { id: 1, image: '/images/malba/tetov1.jpg', large: true },
-    { id: 2, image: '/images/malba/tetov2.jpg', tall: true },
-    { id: 3, image: '/images/malba/tetov3.jpg' },
+    { id: 1, image: '/images/malba/malb1.jpeg', large: true },
+    { id: 2, image: '/images/malba/malba2.JPG', tall: true },
+    /* { id: 3, image: '/images/malba/tetov3.jpg' },
     { id: 4, image: '/images/malba/tetov4.jpg' },
     { id: 5, image: '/images/malba/tetov3.jpg' },
     { id: 6, image: '/images/malba/tetov4.jpg' },
