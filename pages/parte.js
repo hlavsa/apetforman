@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/PartePage.module.css';
 import Head from 'next/head';
 import Link from 'next/link';
+import styles from '../styles/PartePage.module.css'; // Předpokládáme, že CSS je v samostatném souboru
 
-// Custom layout for Parte page only
 export default function PartePage() {
+  // State management
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [submittedData, setSubmittedData] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDesignType, setSelectedDesignType] = useState('klasicke');
   const [showContactForm, setShowContactForm] = useState(false);
+  const [availability, setAvailability] = useState({ isAvailable: false, message: '', dotColor: '' });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,12 +24,12 @@ export default function PartePage() {
 
   // Collection of examples
   const slides = [
-    { id: 1, image: '/images/parte/parte1.jpg', type: 'klasicke', title: 'Klasické parte' },
-    { id: 2, image: '/images/parte/parte2.jpg', type: 'klasicke', title: 'Klasické parte s fotografií' },
-    { id: 3, image: '/images/parte/moderne1.jpg', type: 'moderni', title: 'Moderní minimalistické parte' },
-    { id: 4, image: '/images/parte/moderne2.jpg', type: 'moderni', title: 'Moderní parte s fotografií' },
-    { id: 5, image: '/images/parte/tematicke1.jpg', type: 'tematicke', title: 'Tematické parte - příroda' },
-    { id: 6, image: '/images/parte/tematicke2.jpg', type: 'tematicke', title: 'Tematické parte - koníčky' }
+    { id: 1, image: '/images/parte/klasicke1.jpg', type: 'klasicke', title: 'Klasické parte' },
+    { id: 2, image: '/images/parte/klasicke2.jpg', type: 'klasicke', title: 'Klasické parte s fotografií' },
+    { id: 3, image: '/images/parte/klasicke3.jpg', type: 'klasicke', title: 'Klasické parte s křížem' },
+    { id: 4, image: '/images/parte/tematicke1.jpg', type: 'tematicke', title: 'Tematické parte - příroda' },
+    { id: 5, image: '/images/parte/tematicke2.jpg', type: 'tematicke', title: 'Tematické parte - koníčky' },
+    { id: 6, image: '/images/parte/tematicke3.jpg', type: 'tematicke', title: 'Tematické parte - profese' }
   ];
 
   // FAQ items
@@ -33,27 +37,52 @@ export default function PartePage() {
     {
       id: 1,
       question: "Jak rychle mohu dostat parte?",
-      answer: "První návrh obdržíte do 24 hodin od zaslání potřebných informací a fotografií. Finální verzi dostanete ihned po schválení návrhu a přijetí platby."
+      answer: "S pochopením pro citlivost situace pro Vás připravím první návrh do 24-48 hodin od našeho spojení. Pokud je situace naléhavá, mohu nabídnout i rychlejší zpracování. Finální verzi obdržíte ihned po schválení návrhu."
     },
     {
       id: 2,
-      question: "Mohu si parte nechat upravit podle svých představ?",
-      answer: "Samozřejmě. Návrh můžeme upravovat dokud nebudete plně spokojeni. U klasického a moderního parte jsou v ceně 2-3 revize, u tematického parte neomezený počet revizí."
+      question: "Kolik úprav je možné provést?",
+      answer: "Neomezený počet úprav, dokud nebudete s návrhem spokojeni. Chápu, že jde o citlivé rozhodování v těžké chvíli, a proto Vám poskytnu dostatek času a prostoru pro všechny změny, které budete potřebovat."
     },
     {
       id: 3,
-      question: "Jak parte vytisknu?",
-      answer: "Obdržíte PDF soubor ve vysokém rozlišení, který můžete vytisknout na domácí tiskárně nebo odnést do jakékoliv tiskárny. Poskytuji také instrukce pro tisk a doporučení na kvalitní papír."
+      question: "V jakých formátech dostanu finální parte?",
+      answer: "Obdržíte PDF připravené k tisku i v digitální verzi pro případné sdílení. Vše s jednoduchým návodem pro další použití, abyste se v této náročné době nemuseli zatěžovat technickými detaily."
     },
     {
       id: 4,
-      question: "Může být parte plně personalizované?",
-      answer: "Ano, parte můžeme přizpůsobit přesně osobnosti a zálibám Vašeho blízkého. Můžete zvolit barvy, motivy, texty i celkový styl podle svých představ."
+      question: "Jaké jsou možnosti tisku?",
+      answer: "Soubor bude připraven pro použití v jakékoliv tiskárně. Pokud si nebudete vědět rady, ráda doporučím diskrétní a citlivé služby ve Vašem okolí, nebo mohu tisk zajistit pro Vás, abyste se tím nemuseli zabývat."
     },
     {
       id: 5,
+      question: "Jak mohu poslat fotografii zesnulého?",
+      answer: "Stačí jakákoli fotografie, která je Vám blízká a vystihuje osobnost Vašeho blízkého. Společně vybereme nejvhodnější záběr a podle potřeby provedu jemné úpravy, aby výsledek působil důstojně."
+    },
+    {
+      id: 6,
+      question: "Jaké formáty parte jsou k dispozici?",
+      answer: "Nabízím běžné formáty jako A5, DL nebo čtvercový tvar, ale vždy se přizpůsobím Vašim potřebám. Formát není tak důležitý jako obsah a způsob, jakým uctí památku Vašeho blízkého."
+    },
+    {
+      id: 7,
+      question: "Může být parte osobní a jedinečné?",
+      answer: "Ano, a právě o to se snažím - vytvořit parte, které skutečně odráží jedinečnost života Vašeho blízkého. Ať už miloval přírodu, měl zvláštní koníček nebo specifickou profesi, parte může citlivě odrážet jeho osobnost a to, co jej činilo výjimečným."
+    },
+    {
+      id: 8,
+      question: "Jak je zajištěna ochrana osobních údajů?",
+      answer: "Se všemi informacemi nakládám s maximální citlivostí a diskrétností. Žádné údaje nejsou nikdy sdíleny s třetími stranami a veškeré materiály jsou používány výhradně pro vytvoření parte. Respektuji soukromí Vaší rodiny v tomto těžkém období."
+    },
+    {
+      id: 9,
+      question: "Co když potřebuji parte velmi rychle?",
+      answer: "Chápu, že některé situace vyžadují okamžitou reakci. V naléhavých případech dokáži připravit parte i do 12 hodin. Stačí mi o této potřebě dát vědět a udělám vše pro to, abych Vám v této těžké chvíli vyšel/šla maximálně vstříc."
+    },
+    {
+      id: 10,
       question: "Jak probíhá platba?",
-      answer: "Po schválení návrhu Vám zašlu jednoduché platební údaje. Cena je symbolická a nepřesáhne 200 Kč, protože nechci na Vašem bolu vydělávat."
+      answer: "Platbu řešíme až po Vaší naprosté spokojenosti s návrhem. Symbolická částka slouží především na pokrytí nákladů, protože mým cílem není na Vašem zármutku vydělávat, ale nabídnout pomocnou ruku v těžké chvíli."
     }
   ];
 
@@ -62,19 +91,19 @@ export default function PartePage() {
     {
       id: 1,
       name: "Jana K.",
-      quote: "Moc děkuji za krásné parte pro tatínka. I v takto těžké chvíli bylo příjemné spolupracovat s někým, kdo přistupuje k celé věci s takovou citlivostí a pochopením.",
+      quote: "Děkuji za citlivý přístup při tvorbě parte pro mého tatínka. Ve chvíli, kdy jsem neměla sílu řešit další věci, jste mi nabídli pomocnou ruku a vytvořili důstojnou vzpomínku, která opravdu vystihovala jeho osobnost.",
       rating: 5
     },
     {
       id: 2,
       name: "Tomáš N.",
-      quote: "Parte pro maminku bylo přesně takové, jak by si přála. Děkuji za rychlost a profesionalitu v této náročné situaci.",
+      quote: "V nejtěžším období mého života jsem ocenil Váš lidský přístup. Parte pro maminku bylo přesně takové, jak by si přála - jednoduché, ale plné lásky. Nešlo Vám o peníze, ale o skutečnou pomoc, a to se v dnešní době cení.",
       rating: 5
     },
     {
       id: 3,
       name: "Lucie P.",
-      quote: "Neměla jsem představu, jak parte vytvořit. S Petrou to bylo jednoduché - stačilo poslat fotku a pár řádek o babičce a výsledek předčil očekávání.",
+      quote: "Hledala jsem způsob, jak vytvořit pro babičku parte, které by bylo stejně výjimečné jako ona sama. Díky Vašemu citlivému přístupu a trpělivosti při mnoha úpravách vzniklo něco, na co jsem skutečně hrdá, a co by potěšilo i ji.",
       rating: 5
     }
   ];
@@ -85,62 +114,97 @@ export default function PartePage() {
       id: 'klasicke',
       title: "Klasické parte",
       subtitle: "Tradiční vzpomínka",
-      description: "Ideální, když chcete zachovat tradiční formát parte s možností přidat fotografii a osobní text."
-    },
-    {
-      id: 'moderni',
-      title: "Moderní parte",
-      subtitle: "Současný přístup",
-      description: "Pro ty, kteří preferují čistý design s důrazem na osobní prvky a estetiku."
+      description: "Důstojné klasické parte s možností křesťanských symbolů i bez nich. Jednoduchý, ale působivý způsob, jak uctít památku Vašeho blízkého."
     },
     {
       id: 'tematicke',
-      title: "Tematické parte",
-      subtitle: "Osobnost a záliby",
-      description: "Návrh, který odráží koníčky, profesi nebo životní lásky Vašeho blízkého."
+      title: "TEMATICKÉ parte",
+      subtitle: "Odraz jedinečné osobnosti",
+      description: "Parte vytvořené tak, aby odráželo osobnost, záliby a životní lásky Vašeho blízkého. Způsob, jak skutečně oslavit jedinečný život, který zanechal stopu v našich srdcích."
     }
   ];
 
-  // Pain points and solutions
-  const painPoints = [
+  // Process steps
+  const processSteps = [
     {
       id: 1,
-      problem: "Nemám čas na zařizování parte",
-      solution: "Stačí krátký e-mail či telefonát a vše zařídím za Vás během jednoho dne."
+      number: "1",
+      title: "Společná konzultace",
+      description: "V klidném rozhovoru si povíme o Vašem blízkém a o tom, jak byste si přáli uctít jeho památku."
     },
     {
       id: 2,
-      problem: "Nevím, jak parte vytvořit",
-      solution: "Provedu Vás celým procesem od začátku do konce. Nepotřebujete žádné technické znalosti."
+      number: "2",
+      title: "Citlivý návrh",
+      description: "Vytvořím návrh parte, který odráží jedinečnost osobnosti Vašeho blízkého a respektuje Vaše přání."
     },
     {
       id: 3,
-      problem: "Potřebuji parte rychle",
-      solution: "První návrh dostanete do 24 hodin, expresní dodání finální verze možné do 12 hodin."
-    }
-  ];
-
-  // Benefits of service
-  const benefits = [
-    {
-      id: 1,
-      title: "Osobní přístup",
-      description: "Každé parte vytvářím s respektem a citem pro jedinečnost Vašeho blízkého."
-    },
-    {
-      id: 2,
-      title: "Rychlé zpracování",
-      description: "První návrh do 24 hodin, finální verze ihned po schválení."
-    },
-    {
-      id: 3,
-      title: "Symbolická cena",
-      description: "Cena nepřesáhne 200 Kč, bez ohledu na typ parte nebo počet revizí."
+      number: "3",
+      title: "Čas na rozmyšlenou",
+      description: "Společně projdeme návrh a vneseme všechny úpravy, na které máte právo a které budou potřeba pro Vaši spokojenost."
     },
     {
       id: 4,
-      title: "Plná kontrola",
-      description: "Žádné zveřejnění bez Vašeho souhlasu, možnost kdykoliv proces ukončit."
+      number: "4",
+      title: "Předání hotového parte",
+      description: "Dostanete hotové parte v podobě, kterou potřebujete, společně s podporou pro případný tisk."
+    }
+  ];
+
+  // Benefits
+  const benefits = [
+    {
+      id: 1,
+      title: "Lidský přístup",
+      description: "Ke každému parte přistupuji s respektem k jedinečnosti života, který připomíná, a s vědomím citlivosti situace, ve které se nacházíte."
+    },
+    {
+      id: 2,
+      title: "Čas pro Vás",
+      description: "Nikdy Vás nebudu tlačit do rychlých rozhodnutí. Vždy máte dostatek času přemýšlet a požádat o jakékoli úpravy."
+    },
+    {
+      id: 3,
+      title: "Vstřícnost a pochopení",
+      description: "Rozumím, že procházíte těžkým obdobím. Přizpůsobím se Vašim možnostem a potřebám, ať už jde o čas, komunikaci nebo finance."
+    },
+    {
+      id: 4,
+      title: "Důstojná vzpomínka",
+      description: "Společně vytvoříme parte, které bude skutečně důstojnou vzpomínkou na život, který měl význam a zanechal stopu."
+    }
+  ];
+
+  // Pricing plans
+  const pricingPlans = [
+    {
+      id: 'klasicke',
+      title: 'KLASICKÉ PARTE',
+      description: 'Důstojné tradiční zpracování',
+      price: '200 Kč',
+      features: [
+        'Tradiční citlivý design',
+        'Fotografie Vašeho blízkého',
+        'Neomezený počet úprav',
+        'Dodání podle Vašich potřeb',
+        'PDF připravené k tisku',
+        'Podpora při zajištění tisku'
+      ]
+    },
+    {
+      id: 'tematicke',
+      title: 'TEMATICKÉ PARTE',
+      description: 'Vzpomínka odrážející jedinečnost',
+      price: '350 Kč',
+      features: [
+        'Personalizovaný design',
+        'Více fotografií a osobních prvků',
+        'Neomezený počet úprav',
+        'Možnost rychlého zpracování',
+        'Kompletní tisková příprava',
+        'Možnost textových úprav'
+      ]
     }
   ];
 
@@ -155,10 +219,37 @@ export default function PartePage() {
     setCurrentSlide(slideIndex);
   };
 
+  const checkAvailability = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const isAvailable = hours >= 10 && hours < 18;
+    
+    return {
+      isAvailable,
+      message: isAvailable ? 'Jsem tu pro Vás' : 'Teď nejsem k dispozici',
+      dotColor: isAvailable ? '#4CAF50' : '#FF5252' // Green for available, red for unavailable
+    };
+  };
+
   // Reset current slide when design type changes
   useEffect(() => {
     setCurrentSlide(0);
   }, [selectedDesignType]);
+
+  useEffect(() => {
+    const updateAvailability = () => {
+      setAvailability(checkAvailability());
+    };
+    
+    // Set initial availability
+    updateAvailability();
+    
+    // Update every minute
+    const intervalId = setInterval(updateAvailability, 60000);
+    
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
+  }, []);
 
   // Handle previous slide button
   const handlePrevSlide = () => {
@@ -199,19 +290,80 @@ export default function PartePage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // Here would be code to send the form to the server
-    alert('Děkuji za Váš zájem. Ozvu se Vám co nejdříve.');
-    setShowContactForm(false);
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-      designType: selectedDesignType
-    });
+    
+    try {
+      // Vytvoření textu e-mailu z údajů ve formuláři
+      const subject = `Žádost o vytvoření parte - ${formData.designType === 'klasicke' ? 'Klasické' : 'Osobní tematické'}`;
+      
+      const body = `
+  Dobrý den Petro,
+  
+  chtěl/a bych Vás požádat o vytvoření parte pro mého blízkého.
+  
+  Moje údaje:
+  Jméno: ${formData.name}
+  E-mail: ${formData.email}
+  Telefon: ${formData.phone || 'Neuvedeno'}
+  
+  Typ parte: ${formData.designType === 'klasicke' ? 'Klasické' : 'Osobní tematické'}
+  
+  Moje zpráva:
+  ${formData.message}
+  
+  Fotografie a další nápady posílám v příloze e-mailu.
+  
+      `;
+      
+      // Zakódování pro použití v mailto:
+      const encodedSubject = encodeURIComponent(subject);
+      const encodedBody = encodeURIComponent(body);
+      
+      // Vytvoření mailto: odkazu
+      const mailtoLink = `mailto:petraformankova@icloud.com?subject=${encodedSubject}&body=${encodedBody}`;
+      
+      // Nejprve zobrazíme potvrzení přímo ve formuláři
+      setSubmitStatus({
+        submitted: true,
+        message: "Otevírám váš e-mailový klient... Pokud se neotevře automaticky, zkontrolujte prosím nastavení vašeho prohlížeče."
+      });
+      
+      // Krátká prodleva pro lepší UX
+      setTimeout(() => {
+        // Otevření e-mailového klienta
+        window.location.href = mailtoLink;
+        
+        // ODSTRANĚNO: Nezavíráme drawer, aby zůstal otevřený
+        // setShowContactForm(false);
+        // document.body.style.overflow = 'auto';
+        
+        // Aktualizace statusu pro potvrzení po úspěšném otevření
+        setSubmitStatus({
+          submitted: true,
+          message: "E-mailový klient byl otevřen. Po odeslání e-mailu můžete tento formulář zavřít."
+        });
+      }, 5000);
+      
+      // Reset formuláře NENÍ proveden, aby uživatel viděl, co odeslal
+      // Pokud chcete zachovat data ve formuláři, odstraňte následující reset
+      /*
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: '',
+        designType: selectedDesignType
+      });
+      */
+      
+    } catch (error) {
+      console.error("Chyba při otevírání e-mailového klienta:", error);
+      setSubmitStatus({
+        submitted: true,
+        message: "Nepodařilo se otevřít e-mailový klient. Prosím, kontaktujte nás přímo na petraformankova@icloud.com."
+      });
+    }
   };
 
   // Toggle FAQ
@@ -230,607 +382,376 @@ export default function PartePage() {
     };
   }, []);
 
-  // Pricing plans - updated prices and characteristics
-  const pricingPlans = [
-    {
-      id: 'klasicke',
-      title: 'Klasické',
-      price: 'od 200 Kč',
-      features: [
-        'Tradiční design',
-        'Jedna fotografie',
-        'Dvě revize návrhu',
-        'Dodání do 24 hodin',
-        'PDF připravené k tisku'
-      ]
-    },
-    {
-      id: 'moderni',
-      title: 'Moderní',
-      price: 'od 200 Kč',
-      features: [
-        'Moderní minimalistický design',
-        'Až tři fotografie',
-        'Tři revize návrhu',
-        'Dodání do 24 hodin',
-        'PDF připravené k tisku',
-        'Editovatelný soubor'
-      ]
-    },
-    {
-      id: 'tematicke',
-      title: 'Tematické',
-      price: 'od 200 Kč',
-      features: [
-        'Zcela personalizovaný design',
-        'Neomezený počet fotografií',
-        'Neomezené revize návrhu',
-        'Express dodání (do 12 hodin)',
-        'PDF připravené k tisku',
-        'Editovatelný soubor'
-      ]
-    }
-  ];
-
   return (
-    <div className={styles.parteRoot}>
+    <div className={styles.pageRoot}>
       <Head>
-        <title>Důstojné parte pro Vašeho blízkého | Personalizované parte za symbolickou cenu</title>
-        <meta name="description" content="Vytvořím pro Vás parte přesně podle Vašich představ - tradiční, moderní nebo tematické. S úctou a citlivostí Vám pomůžu připomenout život, který za to opravdu stál. Symbolická cena do 200 Kč." />
+        <title>Důstojné parte s lidským přístupem | Vzpomínka s úctou</title>
+        <meta name="description" content="Pomohu Vám vytvořit parte, které důstojně uctí památku Vašeho blízkého. S pochopením, lidským přístupem a za symbolickou cenu, protože nechci vydělávat na Vašem zármutku." />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
-      {/* Navigation bar - simple and clear */}
-      <div className={styles.navBar}>
-        <Link href="/" className={styles.homeLink}>
-          <div className={styles.homeLinkInner}>← Zpět na hlavní stránku</div>
+      {/* Navigation bar */}
+      <nav className={styles.topNav}>
+        <Link href="/" className={styles.backLink}>
+          ← Zpět na hlavní stránku
         </Link>
-        <div className={styles.navLinks}>
-          <a href="#ukazky" className={styles.navLink}>Ukázky</a>
-          <a href="#vyhody" className={styles.navLink}>Výhody</a>
-          <a href="#proces" className={styles.navLink}>Postup</a>
-          <a href="#cenik" className={styles.navLink}>Ceník</a>
-          <a href="#faq" className={styles.navLink}>FAQ</a>
-        </div>
-      </div>
+        <ul className={styles.navLinks}>
+          <li><a href="#jak-to-funguje">Jak Vám pomohu</a></li>
+          <li><a href="#typy-parte">Typy parte</a></li>
+          <li><a href="#vyhody">Proč se na mě obrátit</a></li>
+          <li><a href="#cenik">Cena</a></li>
+        </ul>
+      </nav>
 
-      <div className={styles.pageContainer}>
-        {/* Hero section - clear outcome */}
-        <div className={styles.heroSection}>
-          <div className={styles.starAccent}>✦</div>
-          <div className={styles.heroContent}>
-            <h1 className={styles.mainTitle}>Důstojné parte pro Vašeho blízkého</h1>
-            <p className={styles.mainDescription}>
-              Vytvořím pro Vás jedinečné parte, které s úctou připomene osobnost a životní cestu člověka, který byl Vašemu srdci blízký.
-            </p>
-            <div className={styles.heroObjection}>
-              <p>Cena je symbolická a nepřekročí 200 Kč. Nechci se na Vašem bolu obohacovat.</p>
-            </div>
-            <div className={styles.statusContainer}>
-              <div className={styles.statusWrapper}>
-                <span className={styles.statusBadge}>
-                  <span className={styles.statusDot}></span>
-                  Jsem Vám k dispozici
-                </span>
+      {/* Hero section */}
+      <section className={styles.heroSection}>
+        <div className={styles.heroContent}>
+          <p className={styles.heroTagline}>Uctít dobře prožitý život, který zanechal stopu</p>
+          
+          <h1 className={styles.heroTitle}>
+            DŮSTOJNÉ <span className={styles.highlightedParte}>PARTE</span><br />S LIDSKÝM<br />PŘÍSTUPEM
+          </h1>
+          
+          <p className={styles.heroNote}>
+          Poskytuji rychlé, citlivé a personalizované zpracování parte do 48 hodin,<br />
+            <span className={styles.highlighted}>s možností express dodání do 24 hodin</span>.
+          </p>
+          
+          <button onClick={toggleContactForm} className={styles.ctaBtn}>
+            KONTAKTUJTE MĚ
+          </button>
+          
+          <div className={styles.availabilityInfo}>
+          <span className={styles.availabilityBadge}>
+            <span className={styles.availabilityDot} style={{ backgroundColor: availability.dotColor }}></span>
+            {availability.message}
+            </span>
+            <span className={styles.priceBadge}>•</span>
+            <span className={styles.priceBadge}>od 200 Kč</span>
+            <span className={styles.priceBadge}>•</span>
+            <span className={styles.priceBadge}>Nechci vydělávat na vašem zármutku</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials section */}
+      <section className={styles.testimonialsSection}>
+        <h2 className={styles.sectionTitle}>ZKUŠENOSTI OSTATNÍCH V PODOBNÉ SITUACI</h2>
+        <div className={styles.testimonialsContainer}>
+          {testimonials.map(testimonial => (
+            <div key={testimonial.id} className={styles.testimonialCard}>
+              <div className={styles.rating}>
+                {Array(testimonial.rating).fill('★').join('')}
               </div>
+              <p className={styles.quote}>{testimonial.quote}</p>
+              <p className={styles.author}>{testimonial.name}</p>
             </div>
-            <p className={styles.contactButtonContainer}>
-              <button
-                onClick={toggleContactForm}
-                className={styles.ctaButton}
+          ))}
+        </div>
+      </section>
+
+      {/* Process section */}
+      <section id="jak-to-funguje" className={styles.processSectionSteps}>
+        <h2 className={styles.sectionTitle}>JAK VÁM MOHU POMOCI</h2>
+        <p className={styles.sectionIntro}>
+          Lidský přístup a pochopení v těžké chvíli. Jsem tu, abych Vám ulehčila jeden z mnoha úkolů, které před Vámi nyní stojí.
+        </p>
+        
+        <div className={styles.processSteps}>
+          {processSteps.map((step, index) => (
+            <div key={step.id} className={styles.processStep}>
+              <div className={styles.stepNumber}>{step.number}</div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+              {index < processSteps.length - 1 && (
+                <div className={styles.stepArrow}>→</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Types of parte section */}
+      <section id="typy-parte" className={styles.typesSection}>
+        <h2 className={styles.sectionTitle}>JAKÉ PARTE MOHU VYTVOŘIT</h2>
+        <p className={styles.sectionIntro}>
+          Každý člověk je jedinečný a zaslouží si vzpomínku, která odráží jeho osobnost, hodnoty a to, co v životě miloval.
+        </p>
+        
+        {/* Types selection */}
+        <div className={styles.useCasesGrid}>
+          {useCases.map(useCase => (
+            <div 
+              key={useCase.id} 
+              className={`${styles.useCaseCard} ${selectedDesignType === useCase.id ? styles.activeUseCase : ''}`}
+              onClick={() => setSelectedDesignType(useCase.id)}
+            >
+              <h3>{useCase.title}</h3>
+              <p className={styles.subtitle}>{useCase.subtitle}</p>
+              <p className={styles.smallText}>{useCase.description}</p>
+            </div>
+          ))}
+        </div>
+        
+        {/* Carousel for examples */}
+        <div className={styles.carouselWrap}>
+          <div className={styles.carouselContainer}>
+            {filteredSlides.map((slide, index) => (
+              <div 
+                key={slide.id}
+                className={index === currentSlide ? styles.carouselSlideActive : styles.carouselSlide}
+              >
+                <img src={slide.image} alt={slide.title} />
+                <div className={styles.slideLabel}>{slide.title}</div>
+              </div>
+            ))}
+          </div>
+          <div className={styles.carouselControls}>
+            <button onClick={handlePrevSlide}>Předchozí</button>
+            <button onClick={handleNextSlide}>Další</button>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits section */}
+      <section id="vyhody" className={styles.benefitsSection}>
+        <h2 className={styles.sectionTitle}>PROČ SE NA MĚ OBRÁTIT</h2>
+        <p className={styles.sectionIntro}>
+          Vytvořit parte je citlivý úkol, který vyžaduje lidský přístup a respekt k jedinečnosti života, který připomíná.
+        </p>
+        
+        <div className={styles.benefitsGrid}>
+          {benefits.map(benefit => (
+            <div key={benefit.id} className={styles.benefitCard}>
+              <h3>{benefit.title}</h3>
+              <p>{benefit.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Pricing section */}
+      <section id="cenik" className={styles.pricingSection}>
+        <h2 className={styles.sectionTitle}>CENÍK</h2>
+        <p className={styles.sectionIntro}>
+          Nechci na Vašem zármutku vydělávat. Částka slouží pouze k pokrytí základních nákladů a času, který přípravě parte věnuji.
+        </p>
+        <p className={styles.sectionIntro}>Pokud se nacházíte v náročné finanční situaci, neváhejte mě kontaktovat – vždy najdeme řešení.</p>
+        
+        <div className={styles.pricingCards}>
+          {pricingPlans.map(plan => (
+            <div 
+              key={plan.id} 
+              className={`${styles.pricingCard}`}
+            >
+              <h3>{plan.title}</h3>
+              <p className={styles.planDesc}>{plan.description}</p>
+              <ul className={styles.planFeatures}>
+                {plan.features.map((feature, index) => (
+                  <li key={index}>
+                    <span className={styles.checkmark}>✓</span> {feature}
+                  </li>
+                ))}
+              </ul>
+              <p className={styles.planPrice}>{plan.price}</p>
+              
+              <button 
+                onClick={() => {
+                  toggleContactForm();
+                }}
+                className={styles.selectPlanBtn}
               >
                 Kontaktujte mě
               </button>
-            </p>
-          </div>
+            </div>
+          ))}
         </div>
+      </section>
 
-        {/* Social proof - build trust */}
-        <div className={styles.testimonialsSection}>
-          <h2 className={styles.sectionTitle}>Co o nás říkají klienti</h2>
-          <div className={styles.testimonialsGrid}>
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className={styles.testimonialCard}>
-                <div className={styles.testimonialRating}>
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className={styles.star}>★</span>
-                  ))}
-                </div>
-                <p className={styles.testimonialQuote}>"{testimonial.quote}"</p>
-                <p className={styles.testimonialAuthor}>{testimonial.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* FAQ Section */}
+      <section id="faq" className={styles.faqSection}>
+        <h2 className={styles.sectionTitle}>ODPOVĚDI NA VAŠE OTÁZKY</h2>
+        <p className={styles.sectionIntro}>
+          Zde najdete odpovědi na nejčastější otázky. Pokud byste se chtěli zeptat na cokoliv dalšího, neváhejte mě kontaktovat.
+        </p>
         
-        {/* Use cases */}
-        <div id="ukazky" className={styles.useCasesSection}>
-          <h2 className={styles.sectionTitle}>Druhy parte</h2>
-          <div className={styles.useCasesGrid}>
-            {useCases.map((useCase) => (
+        <div className={styles.faqWrap}>
+          {faqs.map(faq => (
+            <div key={faq.id} className={styles.faqItem}>
+              <button 
+                className={`${styles.faqQ} ${showFaq === faq.id ? styles.faqQactive : ''}`}
+                onClick={() => toggleFaq(faq.id)}
+                aria-expanded={showFaq === faq.id}
+                aria-controls={`faq-answer-${faq.id}`}
+              >
+                {faq.question}
+                <span className={styles.faqIcon}>
+                  {showFaq === faq.id ? '−' : '+'}
+                </span>
+              </button>
               <div 
-                key={useCase.id} 
-                className={styles.useCaseCard}
-                onClick={() => setSelectedDesignType(useCase.id)}
+                id={`faq-answer-${faq.id}`}
+                className={`${styles.faqA} ${showFaq === faq.id ? styles.faqAshow : ''}`}
+                aria-hidden={showFaq !== faq.id}
               >
-                <div className={`${styles.useCaseCardInner} ${selectedDesignType === useCase.id ? styles.selectedCard : ''}`}>
-                  <h3 className={styles.useCaseTitle}>{useCase.title}</h3>
-                  <p className={styles.useCaseSubtitle}>{useCase.subtitle}</p>
-                  <p className={styles.useCaseDescription}>{useCase.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Product showcase */}
-          <div className={styles.showcaseSection}>
-            <div className={styles.designTypeSelector}>
-              <button 
-                className={`${styles.typeButton} ${selectedDesignType === 'klasicke' ? styles.activeType : ''}`}
-                onClick={() => setSelectedDesignType('klasicke')}
-              >
-                Klasické
-              </button>
-              <button 
-                className={`${styles.typeButton} ${selectedDesignType === 'moderni' ? styles.activeType : ''}`}
-                onClick={() => setSelectedDesignType('moderni')}
-              >
-                Moderní
-              </button>
-              <button 
-                className={`${styles.typeButton} ${selectedDesignType === 'tematicke' ? styles.activeType : ''}`}
-                onClick={() => setSelectedDesignType('tematicke')}
-              >
-                Tematické
-              </button>
-            </div>
-            
-            <div className={styles.carouselSection}>
-              <div className={styles.carouselContainer}>
-                <div className={styles.carouselWrapper}>
-                  {filteredSlides.map((slide, index) => (
-                    <div 
-                      key={slide.id}
-                      className={`${styles.slideItem} ${index === currentSlide ? styles.activeSlide : styles.hiddenSlide}`}
-                    >
-                      <img
-                        src={slide.image}
-                        className={styles.slideImage}
-                        alt={slide.title}
-                      />
-                      <div className={styles.slideCaption}>{slide.title}</div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className={styles.slideIndicators}>
-                  {filteredSlides.map((_, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      className={`${styles.indicator} ${index === currentSlide ? styles.activeIndicator : ''}`}
-                      aria-current={index === currentSlide ? 'true' : 'false'}
-                      aria-label={`Ukázka ${index + 1}`}
-                      onClick={() => showSlide(index)}
-                    ></button>
-                  ))}
-                </div>
-                
-                <button
-                  type="button"
-                  className={styles.prevButton}
-                  onClick={handlePrevSlide}
-                >
-                  <span className={styles.controlButton}>
-                    <svg
-                      className={styles.controlIcon}
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 1 1 5l4 4"
-                      />
-                    </svg>
-                    <span className={styles.srOnly}>Předchozí</span>
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  className={styles.nextButton}
-                  onClick={handleNextSlide}
-                >
-                  <span className={styles.controlButton}>
-                    <svg
-                      className={styles.controlIcon}
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 9 4-4-4-4"
-                      />
-                    </svg>
-                    <span className={styles.srOnly}>Další</span>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Pain points */}
-        <div className={styles.painPointsSection}>
-          <h2 className={styles.sectionTitle}>S čím Vám pomohu</h2>
-          <div className={styles.painPointsGrid}>
-            {painPoints.map((painPoint) => (
-              <div key={painPoint.id} className={styles.painPointCard}>
-                <div className={styles.painPointProblem}>
-                  <h3 className={styles.painPointTitle}>{painPoint.problem}</h3>
-                </div>
-                <div className={styles.painPointSolution}>
-                  <p>{painPoint.solution}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Why us */}
-        <div className={styles.whyUsSection}>
-          <h2 className={styles.sectionTitle}>Proč zvolit mé služby</h2>
-          <div className={styles.whyUsContent}>
-            <p className={styles.whyUsIntro}>
-              Ztráta blízkého člověka přináší těžké chvíle. Vytvoření parte je jedním ze způsobů, jak důstojně uctít jeho památku a oznámit odchod ostatním. Nabízím Vám:
-            </p>
-            <div className={styles.whyUsGrid}>
-              <div className={styles.whyUsItem}>
-                <h3 className={styles.whyUsItemTitle}>Osobní přístup</h3>
-                <p>Ke každému návrhu přistupuji s maximální citlivostí a respektem k Vaší situaci.</p>
-              </div>
-              <div className={styles.whyUsItem}>
-                <h3 className={styles.whyUsItemTitle}>Symbolická cena</h3>
-                <p>Cena nepřekročí 200 Kč, protože nechci na Vašem bolu vydělávat.</p>
-              </div>
-              <div className={styles.whyUsItem}>
-                <h3 className={styles.whyUsItemTitle}>Rychlost zpracování</h3>
-                <p>První návrh obdržíte do 24 hodin, finální verzi obratem po schválení.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* How it works */}
-        <div id="proces" className={styles.processSection}>
-          <h2 className={styles.sectionTitle}>Jak to funguje</h2>
-          <div className={styles.processSteps}>
-            <div className={styles.processStep}>
-              <div className={styles.stepNumber}>1</div>
-              <h3 className={styles.stepTitle}>Kontakt</h3>
-              <p className={styles.stepDescription}>
-                Napište mi e-mail nebo vyplňte kontaktní formulář. Ozveme se Vám během několika hodin.
-              </p>
-            </div>
-            
-            <div className={styles.processStep}>
-              <div className={styles.stepNumber}>2</div>
-              <h3 className={styles.stepTitle}>Sdílení</h3>
-              <p className={styles.stepDescription}>
-                Pošlete mi oblíbený text, fotografie nebo cokoliv, co Vám připomíná Vašeho blízkého.
-              </p>
-            </div>
-            
-            <div className={styles.processStep}>
-              <div className={styles.stepNumber}>3</div>
-              <h3 className={styles.stepTitle}>Návrh</h3>
-              <p className={styles.stepDescription}>
-                Během jednoho dne Vám zašlu návrh v nízké kvalitě rozlišení, který můžeme dále upravovat.
-              </p>
-            </div>
-            
-            <div className={styles.processStep}>
-              <div className={styles.stepNumber}>4</div>
-              <h3 className={styles.stepTitle}>Finalizace</h3>
-              <p className={styles.stepDescription}>
-                Po přijetí platby Vám obratem pošlu finální soubor, který si můžete vytisknout.
-              </p>
-            </div>
-          </div>
-
-          <div className={styles.processGuarantees}>
-            <div className={styles.processGuarantee}>
-              <span className={styles.guaranteeIcon}>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.infoIcon}>
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 16H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-              <p>Bez Vašeho souhlasu nikdy nic nezveřejním.</p>
-            </div>
-            <div className={styles.processGuarantee}>
-              <span className={styles.guaranteeIcon}>
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.infoIcon}>
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 8V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 16H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-              <p>Kdykoliv můžete kontakt přerušit, celou situaci si rozmyslet, neuchovávám žádná data.</p>
-            </div>
-          </div>
-          
-          <button
-            onClick={toggleModal}
-            className={styles.processButton}
-          >
-            Zobrazit podrobný postup
-          </button>
-        </div>
-        
-        {/* Benefits section */}
-        <div id="vyhody" className={styles.benefitsSection}>
-          <h2 className={styles.sectionTitle}>Hlavní výhody</h2>
-          <div className={styles.benefitsGrid}>
-            {benefits.map((benefit) => (
-              <div key={benefit.id} className={styles.benefitCard}>
-                <h3 className={styles.benefitTitle}>{benefit.title}</h3>
-                <p className={styles.benefitDescription}>{benefit.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Pricing section */}
-        <div id="cenik" className={styles.pricingSection}>
-          <h2 className={styles.sectionTitle}>Ceník</h2>
-          <div className={styles.pricingIntro}>
-            <p>Cena za návrh a zpracování parte je symbolická a nepřekročí 200 korun. Nechci se na Vašem bolu obohacovat.</p>
-          </div>
-          <div className={styles.pricingGrid}>
-            {pricingPlans.map((plan) => (
-              <div key={plan.id} className={`${styles.pricingCard} ${selectedDesignType === plan.id ? styles.highlightedPlan : ''}`}>
-                <h3 className={styles.pricingTitle}>{plan.title}</h3>
-                <p className={styles.pricingPrice}>{plan.price}</p>
-                <ul className={styles.featuresList}>
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className={styles.featureItem}>
-                      <svg className={styles.checkIcon} viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <button 
-                  className={styles.selectPlanButton}
-                  onClick={() => {
-                    setSelectedDesignType(plan.id);
-                    toggleContactForm();
-                  }}
-                >
-                  Vybrat
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* FAQ section */}
-        <div id="faq" className={styles.faqSection}>
-          <h2 className={styles.sectionTitle}>Často kladené otázky</h2>
-          <div className={styles.faqList}>
-            {faqs.map((faq) => (
-              <div key={faq.id} className={styles.faqItem}>
-                <button 
-                  className={`${styles.faqQuestion} ${showFaq === faq.id ? styles.faqQuestionActive : ''}`}
-                  onClick={() => toggleFaq(faq.id)}
-                >
-                  {faq.question}
-                  <span className={styles.faqIcon}>
-                    {showFaq === faq.id ? '−' : '+'}
-                  </span>
-                </button>
-                <div className={`${styles.faqAnswer} ${showFaq === faq.id ? styles.faqAnswerShow : ''}`}>
+                <div className={styles.faqAcontent}>
                   <p>{faq.answer}</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-        
-        {/* CTA section */}
-        <div className={styles.ctaSection}>
-          <h2 className={styles.ctaTitle}>Důstojné parte během 24 hodin</h2>
-          <p className={styles.ctaDescription}>
-            Nechte mi na sebe kontakt a já se Vám ozvu co nejdříve, abychom společně vytvořili parte, které bude důstojnou vzpomínkou na Vašeho blízkého.
-          </p>
-          <button
-            onClick={toggleContactForm}
-            className={styles.ctaButtonLarge}
-          >
-            Kontaktujte mě nyní
-          </button>
-        </div>
+      </section>
 
-        {/* Modal */}
-        {isModalOpen && (
-          <div
-            className={styles.modalOverlay}
-            onClick={toggleModal}
-          >
-            <div className={styles.modalContainer} onClick={e => e.stopPropagation()}>
-              {/* Modal content */}
-              <div className={styles.modalContent}>
-                {/* Modal header */}
-                <div className={styles.modalHeader}>
-                  <h2 className={styles.modalTitle}>
-                    Jaký je postup?
-                  </h2>
-                </div>
-                
-                {/* Modal body */}
-                <div className={styles.modalBody}>
-                  <ol className={styles.modalList}>
-                    <li>Bez vašeho souhlasu nikdy nic nezveřejním.</li>
-                    <li>
-                      Cena bude symbolická, nepřekročí 200 korun, nechci se na vašem
-                      bolu obohacovat.
-                    </li>
-                    <li>
-                      V&nbsp;e-mailu zašlete oblíbený text, fotografie, barvu,
-                      vzpomínku, cokoliv, co vám vašeho zesnulého může připomínat,
-                      nebo co měl rád.
-                    </li>
-                    <li>
-                      Během jednoho dne vám zpět, na váš&nbsp;e-mail, zašlu návrh
-                      v&nbsp;nízké kvalitě rozlišení.
-                    </li>
-                    <li>Ten můžeme dál zdokonalovat. Bude to na vás.</li>
-                    <li>
-                      Kdykoliv můžete kontakt přerušit, celou situaci si rozmyslet,
-                      neuchovávám žádná data.
-                    </li>
-                    <li>
-                      Po přijetí platby, vám obratem, na váš&nbsp;e-mail, zašlu PDF,
-                      které si můžete vytisknout
-                    </li>
-                  </ol>
-                </div>
-                
-                {/* Modal footer */}
-                <div className={styles.modalFooter}>
-                  <button
-                    onClick={toggleModal}
-                    type="button"
-                    className={styles.modalCloseButton}
-                  >
-                    Zavřít
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+      {/* CTA Section */}
+      <section className={styles.ctaSection}>
+        <h2>POMOCNÁ RUKA V TĚŽKÉ CHVÍLI</h2>
+        <p>
+          Vím, že nyní procházíte jedním z nejtěžších období života. Jsem tu, abych Vám nabídla pomocnou ruku 
+          a vytvořila parte, které bude důstojnou vzpomínkou na Vašeho blízkého.
+        </p>
+        <button onClick={toggleContactForm} className={styles.ctaBtn}>
+          KONTAKTUJTE MĚ
+        </button>
+      </section>
 
-        {/* Contact Form Modal */}
-        {showContactForm && (
-          <div className={styles.modalOverlay} onClick={toggleContactForm}>
-            <div className={styles.formContainer} onClick={e => e.stopPropagation()}>
-              <div className={styles.formHeader}>
-                <h2 className={styles.formTitle}>Kontaktujte mě</h2>
-                <button 
-                  className={styles.formCloseButton} 
-                  onClick={toggleContactForm}
-                >
-                  ×
-                </button>
-              </div>
-              <form className={styles.contactForm} onSubmit={handleFormSubmit}>
-                <div className={styles.formGroup}>
-                  <label htmlFor="name" className={styles.formLabel}>Vaše jméno</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    className={styles.formInput}
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="email" className={styles.formLabel}>E-mail</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    className={styles.formInput}
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="phone" className={styles.formLabel}>Telefon (nepovinné)</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    className={styles.formInput}
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="designType" className={styles.formLabel}>Typ parte</label>
-                  <select
-                    id="designType"
-                    name="designType"
-                    className={styles.formSelect}
-                    value={formData.designType}
-                    onChange={handleInputChange}
-                  >
-                    <option value="klasicke">Klasické</option>
-                    <option value="moderni">Moderní</option>
-                    <option value="tematicke">Tematické</option>
-                  </select>
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="message" className={styles.formLabel}>Zpráva</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    className={styles.formTextarea}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Sdělte mi prosím Vaše požadavky, nebo cokoliv, co by mi mohlo pomoci připravit parte podle Vašich představ..."
-                    rows={5}
-                  ></textarea>
-                </div>
-                <div className={styles.formNote}>
-                  Odpovím Vám co nejdříve, nejpozději však do 24 hodin.
-                </div>
-                <div className={styles.formGroup}>
-                  <button type="submit" className={styles.formSubmitButton}>
-                    Odeslat
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div className={styles.footer}>
-          <div className={styles.footerContent}>
-            <div className={styles.footerLinks}>
-              <a href="#" className={styles.footerLink}>Zásady ochrany soukromí</a>
-              <a href="#" className={styles.footerLink}>Podmínky služby</a>
-            </div>
-            <div className={styles.footerInfo}>
-              <p className={styles.footerText}>
-                Dobře prožitý život | Parte na míru
-              </p>
-              <p className={styles.footerContact}>
-                Email: petraformankova@icloud.com
-              </p>
-            </div>
-            <p className={styles.footerCopyright}>
-              © Petra Formánková / 2022
+      {showConfirmation && (
+        <div className={styles.confirmationOverlay}>
+            <div className={styles.confirmationPanel}>
+            <h2>Děkujeme za Vaši zprávu</h2>
+            <p>Pro dokončení objednávky parte následujte tyto jednoduché kroky:</p>
+            
+            <ol className={styles.confirmationSteps}>
+                <li>
+                <h3>Zašlete e-mail s fotografiemi</h3>
+                <p>Napište prosím e-mail na adresu <strong>petraformankova@icloud.com</strong></p>
+                <p>Do předmětu uveďte: <strong>Parte - {submittedData?.name}</strong></p>
+                </li>
+                <li>
+                <h3>Přiložte fotografie</h3>
+                <p>Vyberte a přiložte kvalitní fotografie, které by měly být součástí parte.</p>
+                </li>
+                <li>
+                <h3>Očekávejte odpověď</h3>
+                <p>Ozvu se Vám co nejdříve s potvrzením a informacemi o dalším postupu.</p>
+                </li>
+            </ol>
+            
+            <p className={styles.confirmationNote}>
+                Pokud byste měli jakékoliv otázky, neváhejte mě kontaktovat na tel. čísle: <strong>+420 123 456 789</strong>
             </p>
-          </div>
+            
+            <button 
+                className={styles.confirmationCloseBtn}
+                onClick={() => setShowConfirmation(false)}
+            >
+                Rozumím
+            </button>
+            </div>
         </div>
+        )}
+
+      {/* Modal with process explanation */}
+      {/* Contact Form Drawer */}
+{showContactForm && (
+  <div 
+    className={`${styles.drawerOverlay} ${styles.drawerOverlayOpen}`} 
+    onClick={toggleContactForm}
+  >
+    <div 
+      className={`${styles.drawerContainer} ${styles.drawerContainerOpen}`} 
+      onClick={e => e.stopPropagation()}
+    >
+      <div className={styles.drawerHeader}>
+        <h2>Spojte se se mnou</h2>
+        <button onClick={toggleContactForm} className={styles.closeDrawerBtn}>×</button>
       </div>
+      <div className={styles.drawerContent}>
+        <form className={styles.contactForm} onSubmit={handleFormSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="name">Vaše jméno</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="phone">Telefon (nepovinné)</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="designType">Jaký typ parte Vás zajímá</label>
+            <select
+              id="designType"
+              name="designType"
+              value={formData.designType}
+              onChange={handleInputChange}
+            >
+              <option value="klasicke">Klasické</option>
+              <option value="tematicke">Osobní tematické</option>
+            </select>
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="message">Vaše zpráva nebo přání</label>
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              placeholder="Zde můžete popsat, co byste si přáli nebo sdílet jakékoli informace o Vašem blízkém. Neváhejte napsat cokoliv, co považujete za důležité..."
+              rows={5}
+            ></textarea>
+          </div>
+          <div className={styles.formNote}>
+            Odpovím Vám co nejdříve, obvykle do 24 hodin.
+          </div>
+
+          {submitStatus && submitStatus.submitted && (
+                <div className={styles.submitStatusMessage}>
+                <p>{submitStatus.message}</p>
+                </div>
+            )}
+          <div className={styles.formGroup}>
+            <button type="submit" className={styles.submitBtn}>
+              Otevřít e-mailový klient
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+)}
+
+      {/* Footer */}
+      <footer className={styles.footer}>
+        <div className={styles.footerInner}>
+          <p>Důstojné parte | Vzpomínka s úctou</p>
+          <p>E-mail: <a href="mailto:petraformankova@icloud.com">petraformankova@icloud.com</a></p>
+          <p>© 2025 Důstojné Parte | <span className={styles.footerMessage}>S respektem k životu, který zanechal stopu</span></p>
+        </div>
+      </footer>
     </div>
   );
 }

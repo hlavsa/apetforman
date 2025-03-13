@@ -1962,3 +1962,31 @@ html, body {
   }
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f9ece5;
+}
+
+/* Use this class for your main layout pages that need the container styling */
+.mainContainer {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  height: 100vh;
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9ece5;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* This allows the PartePage to use its own styling */
+.parteRoot {
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}

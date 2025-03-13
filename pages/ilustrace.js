@@ -6,9 +6,9 @@ export default function IlustracePage() {
   
   // Sample gallery items for tetování
   const ilustraceItems = [
-    /* { id: 1, image: '/images/ilustrace/tetov1.jpg', large: true },
-    { id: 2, image: '/images/ilustrace/tetov2.jpg', tall: true },
-    { id: 3, image: '/images/ilustrace/tetov3.jpg' },
+    { id: 1, image: '/images/ilustrace/1-ilustrace.png', large: true },
+    { id: 2, image: '/images/ilustrace/parte-ilustrace.png', tall: true },
+    /* { id: 3, image: '/images/ilustrace/tetov3.jpg' },
     { id: 4, image: '/images/ilustrace/tetov4.jpg' },
     { id: 5, image: '/images/ilustrace/tetov3.jpg' },
     { id: 6, image: '/images/ilustrace/tetov4.jpg' },
