@@ -29,14 +29,7 @@ export default function TetovaniPage() {
   return (
     <Layout activePage="tetovani">
       <>
-        <div className="art-page-content" style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gridTemplateRows: 'auto auto',
-          gap: '20px',
-          width: '100%',
-          height: '100%'
-        }}>
+        <div className="art-page-content">
           {tetovaniItems.length > 0 ? (
             tetovaniItems.map(item => (
               <div 
@@ -48,59 +41,20 @@ export default function TetovaniPage() {
               </div>
             ))
           ) : (
-            <div className="no-images-message" style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-              height: '100%',
-              gridColumn: 'span 2',
-              padding: '2rem'
-            }}>
-              <div style={{
-                padding: '1.5rem 2rem',
-                background: 'url("/images/torn-paper.webp") center/cover no-repeat',
-                display: 'inline-block',
-                position: 'relative'
-              }}>
-                <p style={{
-                  fontFamily: 'var(--reenie-beanie), sans-serif',
-                  fontSize: '2.5rem',
-                  fontWeight: '400',
-                  color: '#16161D',
-                  margin: 0,
-                  position: 'relative',
-                  zIndex: 2
-                }}>
-                  zatím bez obrázků
-                </p>
+            <div className="no-images-message">
+              <div className="empty-message">
+                <p>zatím bez obrázků</p>
               </div>
             </div>
           )}
         </div>
         
         {/* Port hand with more extreme positioning and styling */}
-        <div style={{
-          position: 'fixed', 
-          bottom: '0', 
-          left: '30%', 
-          zIndex: '999',
-          pointerEvents: 'none',
-          width: '100%',
-          height: '300px',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-end'
-        }}>
+        <div className="port-hand-container">
           <img
             src="/images/port-hand.webp"
             alt="Port hand"
-            style={{
-              width: '40%',
-              height: 'auto',
-              objectFit: 'contain',
-              mixBlendMode: 'multiply'
-            }}
+            className="port-hand-image"
           />
         </div>
       </>
@@ -120,6 +74,155 @@ export default function TetovaniPage() {
           </div>
         </div>
       )}
+      
+      <style jsx>{`
+        .art-page-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto;
+          gap: 20px;
+          width: 100%;
+          height: 100%;
+        }
+        
+        .art-item {
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+          aspect-ratio: 1 / 1;
+        }
+        
+        .art-item:hover {
+          transform: scale(1.02);
+        }
+        
+        .art-item.large {
+          grid-column: span 2;
+        }
+        
+        .art-item.tall {
+          grid-row: span 2;
+        }
+        
+        .art-item img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        
+        .no-images-message {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          grid-column: span 2;
+          padding: 2rem;
+        }
+        
+        .empty-message {
+          padding: 1.5rem 2rem;
+          background: url("/images/torn-paper.webp") center/cover no-repeat;
+          display: inline-block;
+          position: relative;
+        }
+        
+        .empty-message p {
+          font-family: var(--reenie-beanie), sans-serif;
+          font-size: 2.5rem;
+          font-weight: 400;
+          color: #16161D;
+          margin: 0;
+          position: relative;
+          z-index: 2;
+        }
+        
+        .port-hand-container {
+          position: fixed;
+          bottom: 0;
+          left: 30%;
+          z-index: 5;
+          pointer-events: none;
+          width: 100%;
+          height: 300px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-end;
+        }
+        
+        .port-hand-image {
+          width: 40%;
+          height: auto;
+          object-fit: contain;
+          mix-blend-mode: multiply;
+        }
+        
+        @media (max-width: 768px) {
+          .art-page-content {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            padding: 10px;
+            max-width: 80%;
+            margin: 0 auto;
+          }
+          
+          .art-item {
+            max-width: 100%;
+            margin: 0 auto;
+          }
+          
+          .art-item.large {
+            grid-column: span 1;
+            max-height: 250px;
+          }
+          
+          .art-item.tall {
+            aspect-ratio: 1 / 1.5;
+            grid-row: span 1;
+            max-height: 300px;
+          }
+          
+          .port-hand-container {
+            left: 0;
+            height: 150px;
+            justify-content: center;
+            bottom: 0;
+          }
+          
+          .port-hand-image {
+            width: 35%;
+            max-width: 120px;
+          }
+          
+          .empty-message p {
+            font-size: 1.8rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .art-page-content {
+            gap: 10px;
+            padding: 5px;
+            max-width: 70%;
+          }
+          
+          .art-item.large {
+            max-height: 180px;
+          }
+          
+          .art-item.tall {
+            max-height: 220px;
+          }
+          
+          .port-hand-image {
+            width: 30%;
+            max-width: 100px;
+          }
+        }
+      `}</style>
     </Layout>
   );
 }

@@ -63,58 +63,108 @@ export default function KontaktPage() {
     window.location.href = mailtoLink;
   };
 
-  // Main content for the contact page
-  const kontaktContent = (
-    <div className="contact-form-container">
-      <img
-        src="/images/contact-hand.webp"
-        alt="Contact hand"
-        className="contact-hand"
-      />
-      
-      {/* Contact form */}
-      <div className="contact-form-wrapper">
-        <form className="contactForm" onSubmit={handleEmailSubmit}>
-          <div className="formTitleWrapper">
-            <h2 className="formTitle">Chci...</h2>
-            
-            {/* Dropdown for options - styled to match torn paper aesthetic */}
-            <div className="typeSelection" ref={dropdownRef}>
-              <button 
-                type="button" 
-                className={`typeButton ${selectedOption ? 'selected' : ''}`}
-                onClick={toggleDropdown}
-              >
-                {selectedOption || 'vybrat'}
-              </button>
-              
-              {isDropdownOpen && (
-                <div className="dropdownOptions">
-                  {options.map(option => (
-                    <button
-                      key={option}
-                      type="button"
-                      className="typeButton"
-                      onClick={() => selectOption(option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <input type="text" className="formInput" placeholder="jméno" />
-          <button type="submit" className="submitButton">otevřít e-mail</button>
-        </form>
-      </div>
-    </div>
-  );
-
   return (
     <Layout activePage="kontakt">
-      {kontaktContent}
+      <div className="contact-form-container">
+        <div className="contact-image-wrapper">
+          <img
+            src="/images/contact-hand.webp"
+            alt="Contact hand"
+            className="contact-hand"
+          />
+        </div>
+        
+        {/* Contact form */}
+        <div className="contact-form-wrapper">
+          <form className="contactForm" onSubmit={handleEmailSubmit}>
+            <div className="formTitleWrapper">
+              <h2 className="formTitle">Chci...</h2>
+              
+              {/* Dropdown for options - styled to match torn paper aesthetic */}
+              <div className="typeSelection" ref={dropdownRef}>
+                <button 
+                  type="button" 
+                  className={`typeButton ${selectedOption ? 'selected' : ''}`}
+                  onClick={toggleDropdown}
+                >
+                  {selectedOption || 'vybrat'}
+                </button>
+                
+                {isDropdownOpen && (
+                  <div className="dropdownOptions">
+                    {options.map(option => (
+                      <button
+                        key={option}
+                        type="button"
+                        className="typeButton"
+                        onClick={() => selectOption(option)}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <input type="text" className="formInput" placeholder="jméno" />
+            <button type="submit" className="submitButton">otevřít e-mail</button>
+          </form>
+        </div>
+      </div>
+
+      <style jsx>{`
+        /* Mobile-specific styles for the contact form */
+        @media (max-width: 768px) {
+          .contact-form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: relative;
+            padding-top: 20px;
+          }
+          
+          .contact-image-wrapper {
+            width: 100%;
+            max-width: 300px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+          }
+          
+          .contact-hand {
+            width: 100%;
+            max-width: 280px;
+            height: auto;
+            position: relative;
+            top: 0;
+            object-fit: contain;
+          }
+          
+          .contact-form-wrapper {
+            width: 100%;
+            max-width: 280px;
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+          }
+          
+          .contactForm {
+            position: relative;
+            top: 0;
+            left: 0;
+            padding: 1rem;
+            width: 100%;
+          }
+          
+          .dropdownOptions {
+            top: -10px;
+            width: 100%;
+            left: 50%;
+          }
+        }
+      `}</style>
     </Layout>
   );
 }
