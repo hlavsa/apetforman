@@ -283,7 +283,7 @@ export default function Layout({ children, activePage = 'home', onNavHover }) {
         <div className="mobile-page">
           {/* Title at top */}
           <h1 className="mainTitle">
-            petra<br />formánková.
+            Petra<br />Formánková.
           </h1>
           
           {/* Main content (image with circle) */}
