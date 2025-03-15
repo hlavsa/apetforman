@@ -16,7 +16,7 @@ export default function KontaktPage() {
     'konzultaci'
   ];
   
-  // Add click outside listener to close dropdown
+  // Add click-outside listener to close dropdown
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -24,12 +24,9 @@ export default function KontaktPage() {
       }
     }
     
-    // Add event listener when dropdown is open
     if (isDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-    
-    // Clean up event listener
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -50,10 +47,10 @@ export default function KontaktPage() {
   const handleEmailSubmit = (e) => {
     e.preventDefault();
     
-    const nameInput = e.target.querySelector('.formInput').value;
+    const nameInput = e.target.querySelector('.name-input').value;
     const requestType = selectedOption || 'informace';
     
-    // Prepare email parameters
+    // Prepare mail parameters
     const recipient = 'petraformankova@icloud.com'; // Replace with the actual email
     const subject = `art.petforman: Žádost o ${requestType}`;
     const body = `Ahoj Petro,\n\njmenuji se ${nameInput || '[Vaše jméno]'} a mám zájem o tvoji ${requestType}.`;
@@ -65,38 +62,36 @@ export default function KontaktPage() {
 
   return (
     <Layout activePage="kontakt">
-      <div className="contact-form-container">
-        <div className="contact-image-wrapper">
+      <div className="scrollable-kontakt-page">
+        <div className="hand-container">
           <img
             src="/images/contact-hand.webp"
-            alt="Contact hand"
-            className="contact-hand"
+            alt="Kontakt hand"
+            className="hand-image"
           />
         </div>
         
-        {/* Contact form */}
-        <div className="contact-form-wrapper">
-          <form className="contactForm" onSubmit={handleEmailSubmit}>
-            <div className="formTitleWrapper">
-              <h2 className="formTitle">Chci...</h2>
+        <div className="form-container">
+          <form className="form-content" onSubmit={handleEmailSubmit}>
+            <div className="title-row">
+              <h2 className="title-text">Chci...</h2>
               
-              {/* Dropdown for options - styled to match torn paper aesthetic */}
-              <div className="typeSelection" ref={dropdownRef}>
+              <div className="dropdown-wrapper" ref={dropdownRef}>
                 <button 
                   type="button" 
-                  className={`typeButton ${selectedOption ? 'selected' : ''}`}
+                  className={`select-btn ${selectedOption ? 'selected' : ''}`}
                   onClick={toggleDropdown}
                 >
                   {selectedOption || 'vybrat'}
                 </button>
                 
                 {isDropdownOpen && (
-                  <div className="dropdownOptions">
+                  <div className="dropdown-list">
                     {options.map(option => (
                       <button
                         key={option}
                         type="button"
-                        className="typeButton"
+                        className="option-btn"
                         onClick={() => selectOption(option)}
                       >
                         {option}
@@ -107,61 +102,238 @@ export default function KontaktPage() {
               </div>
             </div>
             
-            <input type="text" className="formInput" placeholder="jméno" />
-            <button type="submit" className="submitButton">otevřít e-mail</button>
+            <input type="text" className="name-input" placeholder="jméno" />
+            <button type="submit" className="submit-btn">otevřít e-mail</button>
           </form>
         </div>
       </div>
 
+      {/* Page-specific styles */}
       <style jsx>{`
-        /* Mobile-specific styles for the contact form */
+        /* -------------------------------------------------------
+           Container that holds the entire Kontakt page content
+           ------------------------------------------------------- */
+        .scrollable-kontakt-page {
+          /* Let it auto-size in height rather than fixed 100vh */
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-bottom: 100px;
+
+          /* Allow the page to scroll on iOS Safari */
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+        
+        .hand-container {
+          width: 100%;
+          max-width: 400px;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 0;
+          position: relative;
+          z-index: 1;
+        }
+        
+        .hand-image {
+          width: 100%;
+          max-width: 380px;
+          height: auto;
+          object-fit: contain;
+        }
+        
+        .form-container {
+          margin-top: -80px; /* Overlap with the hand image */
+          width: 90%;
+          max-width: 300px;
+          z-index: 2;
+          position: relative;
+          background: url("/images/torn-paper.webp") center/cover repeat;
+          padding: 20px 15px;
+          border-radius: 10px;
+        }
+        
+        .form-content {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        
+        .title-row {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        
+        .title-text {
+          font-family: var(--reenie-beanie), sans-serif;
+          font-size: 2rem;
+          margin: 0;
+          color: #16161D;
+        }
+        
+        .dropdown-wrapper {
+          position: relative;
+          display: inline-block;
+          z-index: 100;
+        }
+        
+        .select-btn {
+          background: none;
+          border: none;
+          font-size: 1.75rem;
+          font-family: var(--reenie-beanie), sans-serif;
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+          color: #16161D;
+          opacity: 0.6;
+          transition: all 0.3s ease;
+        }
+        
+        .select-btn.selected {
+          opacity: 1;
+          background: url("/images/torn-paper.webp") center/cover no-repeat;
+        }
+        
+        .dropdown-list {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 140px;
+          background: url("/images/torn-paper.webp");
+          background-repeat: round;
+          padding: 2rem 0.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          z-index: 200;
+        }
+        
+        .option-btn {
+          text-align: center;
+          padding: 0.5rem;
+          font-size: 1.5rem;
+          font-family: var(--reenie-beanie), sans-serif;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          color: #16161D;
+          opacity: 0.9;
+          transition: all 0.3s ease;
+        }
+        
+        .option-btn:hover {
+          opacity: 1;
+        }
+        
+        .name-input {
+          width: 100%;
+          padding: 0.5rem;
+          font-size: 1.75rem;
+          font-family: var(--reenie-beanie), sans-serif;
+          border: none;
+          background: transparent;
+          border-bottom: 2px solid #16161D;
+          outline: none;
+          color: #16161D;
+        }
+        
+        .name-input::placeholder {
+          color: #16161D;
+          opacity: 0.7;
+        }
+        
+        .submit-btn {
+          align-self: flex-start;
+          background: url("/images/torn-paper.webp") center/cover no-repeat;
+          border: none;
+          cursor: pointer;
+          font-size: 1.5rem;
+          font-family: var(--reenie-beanie), sans-serif;
+          padding: 0.5rem 2rem;
+          color: #16161D;
+          margin-top: 10px;
+        }
+        
+        /* ------------------
+           Mobile adjustments
+           ------------------ */
         @media (max-width: 768px) {
-          .contact-form-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            position: relative;
-            padding-top: 20px;
+          .hand-container {
+            max-width: 320px;
           }
           
-          .contact-image-wrapper {
-            width: 100%;
+          .hand-image {
             max-width: 300px;
-            position: relative;
-            display: flex;
-            justify-content: center;
           }
           
-          .contact-hand {
-            width: 100%;
+          .form-container {
+            max-width: 260px;
+            margin-top: -60px;
+          }
+          
+          .title-text,
+          .select-btn {
+            font-size: 1.5rem;
+          }
+          
+          .dropdown-list {
+            width: 130px;
+            padding: 1.5rem 0.5rem;
+          }
+          
+          .option-btn {
+            font-size: 1.25rem;
+          }
+          
+          .name-input {
+            font-size: 1.5rem;
+          }
+          
+          .submit-btn {
+            font-size: 1.25rem;
+            padding: 0.4rem 1.5rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .hand-container {
             max-width: 280px;
-            height: auto;
-            position: relative;
-            top: 0;
-            object-fit: contain;
           }
           
-          .contact-form-wrapper {
-            width: 100%;
-            max-width: 280px;
-            margin-top: -80px;
-            position: relative;
-            z-index: 10;
+          .hand-image {
+            max-width: 260px;
           }
           
-          .contactForm {
-            position: relative;
-            top: 0;
-            left: 0;
-            padding: 1rem;
-            width: 100%;
+          .form-container {
+            max-width: 240px;
+            margin-top: -50px;
           }
           
-          .dropdownOptions {
-            top: -10px;
-            width: 100%;
-            left: 50%;
+          .title-text,
+          .select-btn {
+            font-size: 1.3rem;
+          }
+          
+          .name-input {
+            font-size: 1.3rem;
+          }
+          
+          .submit-btn {
+            font-size: 1.2rem;
+            padding: 0.3rem 1.2rem;
+          }
+          
+          .dropdown-list {
+            width: 120px;
+            padding: 1.2rem 0.4rem;
+          }
+          
+          .option-btn {
+            font-size: 1.1rem;
+            padding: 0.3rem;
           }
         }
       `}</style>
