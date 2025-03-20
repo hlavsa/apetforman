@@ -5,7 +5,6 @@ export default function KontaktPage() {
   const [selectedOption, setSelectedOption] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-  // Add a ref for the dropdown
   const dropdownRef = useRef(null);
   
   const options = [
@@ -16,7 +15,6 @@ export default function KontaktPage() {
     'konzultaci'
   ];
   
-  // Add click-outside listener to close dropdown
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -32,12 +30,10 @@ export default function KontaktPage() {
     };
   }, [isDropdownOpen]);
   
-  // Toggle dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
   
-  // Select option
   const selectOption = (option) => {
     setSelectedOption(option);
     setIsDropdownOpen(false);
@@ -50,12 +46,10 @@ export default function KontaktPage() {
     const nameInput = e.target.querySelector('.name-input').value;
     const requestType = selectedOption || 'informace';
     
-    // Prepare mail parameters
     const recipient = 'petraformankova@icloud.com'; // Replace with the actual email
     const subject = `art.petforman: Žádost o ${requestType}`;
     const body = `Ahoj Petro,\n\njmenuji se ${nameInput || '[Vaše jméno]'} a mám zájem o tvoji ${requestType}.`;
     
-    // Create mailto link and open it
     const mailtoLink = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
   };
@@ -63,14 +57,8 @@ export default function KontaktPage() {
   return (
     <Layout activePage="kontakt">
       <div className="scrollable-kontakt-page">
-        <div className="hand-container">
-          <img
-            src="/images/contact-hand.webp"
-            alt="Kontakt hand"
-            className="hand-image"
-          />
-        </div>
         
+        {/* Put the form container first so it appears above (on top of) the hand */}
         <div className="form-container">
           <form className="form-content" onSubmit={handleEmailSubmit}>
             <div className="title-row">
@@ -87,7 +75,7 @@ export default function KontaktPage() {
                 
                 {isDropdownOpen && (
                   <div className="dropdown-list">
-                    {options.map(option => (
+                    {options.map((option) => (
                       <button
                         key={option}
                         type="button"
@@ -102,56 +90,49 @@ export default function KontaktPage() {
               </div>
             </div>
             
-            <input type="text" className="name-input" placeholder="jméno" />
+            <input
+              type="text"
+              className="name-input"
+              placeholder="jméno"
+            />
             <button type="submit" className="submit-btn">otevřít e-mail</button>
           </form>
         </div>
+
+        {/* Then the hand container */}
+        <div className="hand-container">
+          <img
+            src="/images/contact-hand.webp"
+            alt="Kontakt hand"
+            className="hand-image"
+          />
+        </div>
       </div>
 
-      {/* Page-specific styles */}
       <style jsx>{`
-        /* -------------------------------------------------------
-           Container that holds the entire Kontakt page content
-           ------------------------------------------------------- */
+        /* Outermost scrolling container */
         .scrollable-kontakt-page {
-          /* Let it auto-size in height rather than fixed 100vh */
           width: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
           padding-bottom: 100px;
 
-          /* Allow the page to scroll on iOS Safari */
+          /* Allow scrolling on iOS Safari */
           overflow-y: auto;
           -webkit-overflow-scrolling: touch;
         }
         
-        .hand-container {
-          width: 100%;
-          max-width: 400px;
-          display: flex;
-          justify-content: center;
-          margin-bottom: 0;
-          position: relative;
-          z-index: 1;
-        }
-        
-        .hand-image {
-          width: 100%;
-          max-width: 380px;
-          height: auto;
-          object-fit: contain;
-        }
-        
+        /* Form container comes first; ensure it stays above the hand. */
         .form-container {
-          margin-top: -80px; /* Overlap with the hand image */
           width: 90%;
           max-width: 300px;
-          z-index: 2;
           position: relative;
+          z-index: 2; /* Higher than the hand's z-index */
           background: url("/images/torn-paper.webp") center/cover repeat;
           padding: 20px 15px;
           border-radius: 10px;
+          margin-top: 20px; /* You can adjust or remove this if you want them overlapped. */
         }
         
         .form-content {
@@ -256,42 +237,52 @@ export default function KontaktPage() {
           color: #16161D;
           margin-top: 10px;
         }
+
+        /* Hand container (below the form) */
+        .hand-container {
+          width: 100%;
+          max-width: 400px;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+          z-index: 1; /* Lower than the form container */
+        }
         
-        /* ------------------
-           Mobile adjustments
-           ------------------ */
+        .hand-image {
+          width: 100%;
+          max-width: 380px;
+          height: auto;
+          object-fit: contain;
+        }
+
+        /* -------------
+           Mobile tweaks
+           ------------- */
         @media (max-width: 768px) {
           .hand-container {
             max-width: 320px;
           }
-          
           .hand-image {
             max-width: 300px;
           }
-          
           .form-container {
             max-width: 260px;
-            margin-top: -60px;
           }
-          
           .title-text,
           .select-btn {
             font-size: 1.5rem;
           }
-          
           .dropdown-list {
             width: 130px;
             padding: 1.5rem 0.5rem;
           }
-          
           .option-btn {
             font-size: 1.25rem;
           }
-          
           .name-input {
             font-size: 1.5rem;
           }
-          
           .submit-btn {
             font-size: 1.25rem;
             padding: 0.4rem 1.5rem;
@@ -302,35 +293,27 @@ export default function KontaktPage() {
           .hand-container {
             max-width: 280px;
           }
-          
           .hand-image {
             max-width: 260px;
           }
-          
           .form-container {
             max-width: 240px;
-            margin-top: -50px;
           }
-          
           .title-text,
           .select-btn {
             font-size: 1.3rem;
           }
-          
           .name-input {
             font-size: 1.3rem;
           }
-          
           .submit-btn {
             font-size: 1.2rem;
             padding: 0.3rem 1.2rem;
           }
-          
           .dropdown-list {
             width: 120px;
             padding: 1.2rem 0.4rem;
           }
-          
           .option-btn {
             font-size: 1.1rem;
             padding: 0.3rem;
@@ -340,3 +323,4 @@ export default function KontaktPage() {
     </Layout>
   );
 }
+  
